@@ -1300,9 +1300,23 @@
       letter-spacing: 0;
     }
 
-    /* ---------- SECTION shared ---------- */
+    /* ---------- SECTION shared & PERFORMANCE ---------- */
     section {
       padding: 96px 0;
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 700px;
+    }
+
+    header,
+    .nav-backdrop,
+    .nav-links,
+    .photo-card,
+    .cat-tile,
+    .structure-card,
+    .feature-tile,
+    .btn {
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     .section-head {
