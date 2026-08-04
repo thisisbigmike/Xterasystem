@@ -16,17 +16,18 @@ export default function Footer() {
               gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
               gap: '40px',
               paddingBottom: '48px',
+              alignItems: 'start',
             }}
           >
             {/* Column 1: Xterasystem Brand & Socials */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start', textAlign: 'left' }}>
               <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--fg)' }}>
                 <GlobeLogo maskId="footer-globe-mask" />
                 <span style={{ fontSize: '20px', fontWeight: '700', fontFamily: 'var(--display)', letterSpacing: '-0.02em' }}>
                   Xterasystem
                 </span>
               </Link>
-              <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.6', margin: 0, maxWidth: '280px' }}>
+              <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.6', margin: 0, maxWidth: '280px', textAlign: 'left' }}>
                 Empowering institutions and accredited investors to access curated real assets, private credit, and alternative markets with institutional governance.
               </p>
               <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '8px' }}>
@@ -55,55 +56,55 @@ export default function Footer() {
             </div>
 
             {/* Column 2: Company & Investment Universe */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-              <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)' }}>Company</h4>
-                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <a href="#about" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>About Xterasystem</a>
-                  <a href="#structures" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Legal Architecture</a>
-                  <a href="#team" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Custodial Partners</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Institutional Governance</a>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', alignItems: 'flex-start', textAlign: 'left' }}>
+              <div style={{ width: '100%', textAlign: 'left' }}>
+                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)', textAlign: 'left' }}>Company</h4>
+                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', textAlign: 'left', paddingLeft: 0 }}>
+                  <a href="#about" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>About Xterasystem</a>
+                  <a href="#structures" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Legal Architecture</a>
+                  <a href="#team" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Custodial Partners</a>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Institutional Governance</a>
                 </nav>
               </div>
-              <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)' }}>Investment Universe</h4>
-                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Real Estate &amp; Infrastructure</a>
-                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Private Equity &amp; Credit</a>
-                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Renewable Energy</a>
-                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Venture Capital</a>
+              <div style={{ width: '100%', textAlign: 'left' }}>
+                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)', textAlign: 'left' }}>Investment Universe</h4>
+                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', textAlign: 'left', paddingLeft: 0 }}>
+                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Real Estate &amp; Infrastructure</a>
+                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Private Equity &amp; Credit</a>
+                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Renewable Energy</a>
+                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Venture Capital</a>
                 </nav>
               </div>
             </div>
 
             {/* Column 3: Resources & Legal */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-              <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)' }}>Resources</h4>
-                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Market Insights</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Due Diligence Framework</a>
-                  <a href="#faq" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Investor FAQ</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Asset Class Guides</a>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', alignItems: 'flex-start', textAlign: 'left' }}>
+              <div style={{ width: '100%', textAlign: 'left' }}>
+                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)', textAlign: 'left' }}>Resources</h4>
+                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', textAlign: 'left', paddingLeft: 0 }}>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Market Insights</a>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Due Diligence Framework</a>
+                  <a href="#faq" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Investor FAQ</a>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Asset Class Guides</a>
                 </nav>
               </div>
-              <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)' }}>Legal &amp; Compliance</h4>
-                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Privacy Policy</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Terms of Service</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Risk Disclosures</a>
+              <div style={{ width: '100%', textAlign: 'left' }}>
+                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)', textAlign: 'left' }}>Legal &amp; Compliance</h4>
+                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', textAlign: 'left', paddingLeft: 0 }}>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Privacy Policy</a>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Terms of Service</a>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Risk Disclosures</a>
                 </nav>
               </div>
             </div>
 
             {/* Column 4: Newsletter */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <h4 style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: 'var(--fg)' }}>Subscribe to market intelligence</h4>
-              <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.5', margin: 0, maxWidth: '300px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'flex-start', textAlign: 'left' }}>
+              <h4 style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: 'var(--fg)', textAlign: 'left' }}>Subscribe to market intelligence</h4>
+              <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.5', margin: 0, maxWidth: '300px', textAlign: 'left' }}>
                 Receive weekly market analysis, deal summaries, and institutional alternative asset reports.
               </p>
-              <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', gap: '10px', marginTop: '6px', flexWrap: 'wrap' }}>
+              <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', gap: '10px', marginTop: '6px', flexWrap: 'wrap', width: '100%' }}>
                 <input
                   type="email"
                   placeholder="Enter your business email"
@@ -147,6 +148,7 @@ export default function Footer() {
               lineHeight: '1.6',
               marginBottom: '24px',
               opacity: 0.8,
+              textAlign: 'left',
             }}
           >
             Investing in alternative assets involves risk, including possible loss of principal. Past performance is no guarantee of future results. Offerings are available only to qualified investors in eligible jurisdictions.
