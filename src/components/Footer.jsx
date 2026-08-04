@@ -61,7 +61,7 @@ export default function Footer() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
               gap: '40px',
               paddingBottom: '48px',
               alignItems: 'start',
@@ -158,19 +158,31 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Column 4: Newsletter Subscription Form */}
+            {/* Column 4: Newsletter Subscription Form (Side-by-Side Row Layout as in Image 1) */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'flex-start', textAlign: 'left' }}>
-              <h4 style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: 'var(--fg)', textAlign: 'left' }}>Subscribe to our newsletter</h4>
-              <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.5', margin: 0, maxWidth: '300px', textAlign: 'left' }}>
-                Stay updated with our latest projects, design tips, and company news.
+              <h4 style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: 'var(--fg)', textAlign: 'left' }}>Subscribe to market intelligence</h4>
+              <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.5', margin: 0, maxWidth: '320px', textAlign: 'left' }}>
+                Stay updated with Xterasystem alternative asset opportunities, market insights, and institutional deal reports.
               </p>
-              <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', gap: '12px', marginTop: '8px', alignItems: 'center', flexWrap: 'wrap', width: '100%' }}>
+              <form
+                onSubmit={(e) => e.preventDefault()}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: '10px',
+                  marginTop: '8px',
+                  width: '100%',
+                  maxWidth: '340px',
+                }}
+              >
                 <input
                   type="email"
                   placeholder="Enter your email"
                   style={{
-                    flex: '1 1 170px',
-                    padding: '11px 20px',
+                    flex: '1',
+                    minWidth: '0',
+                    padding: '10px 18px',
                     borderRadius: '9999px',
                     border: '1px solid var(--border-strong)',
                     backgroundColor: 'var(--bg)',
@@ -181,12 +193,13 @@ export default function Footer() {
                   }}
                 />
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                   type="submit"
                   style={{
-                    padding: '11px 26px',
+                    flexShrink: 0,
+                    padding: '10px 22px',
                     borderRadius: '9999px',
                     backgroundColor: '#111827',
                     color: '#ffffff',
@@ -196,7 +209,6 @@ export default function Footer() {
                     cursor: 'pointer',
                     whiteSpace: 'nowrap',
                     boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
-                    flexShrink: 0,
                   }}
                 >
                   Subscribe
