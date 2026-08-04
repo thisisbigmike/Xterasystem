@@ -21,12 +21,12 @@ export default function Footer() {
           >
             {/* Column 1: Xterasystem Brand & Socials */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start', textAlign: 'left' }}>
-              <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--fg)' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', color: 'var(--fg)', cursor: 'default' }}>
                 <GlobeLogo maskId="footer-globe-mask" />
                 <span style={{ fontSize: '20px', fontWeight: '700', fontFamily: 'var(--display)', letterSpacing: '-0.02em' }}>
                   Xterasystem
                 </span>
-              </Link>
+              </div>
               <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.6', margin: 0, maxWidth: '280px', textAlign: 'left' }}>
                 Empowering institutions and accredited investors to access curated real assets, private credit, and alternative markets with institutional governance.
               </p>
