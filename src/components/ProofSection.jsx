@@ -1,14 +1,31 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import FadeIn, { StaggerContainer, StaggerItem, springBounce } from './FadeIn';
 
 export default function ProofSection() {
   const teamMembers = [
-    { name: "Alex Johnson", role: "Creative Director" },
-    { name: "Sam Taylor", role: "Lead Designer" },
-    { name: "Jordan Smith", role: "Senior Developer" },
-    { name: "Casey Brown", role: "Project Manager" },
+    {
+      name: "Alex Johnson",
+      role: "Creative Director",
+      image: "/images/team_alex.png",
+    },
+    {
+      name: "Sam Taylor",
+      role: "Lead Designer",
+      image: "/images/team_sam.png",
+    },
+    {
+      name: "Jordan Smith",
+      role: "Senior Developer",
+      image: "/images/team_jordan.png",
+    },
+    {
+      name: "Casey Brown",
+      role: "Project Manager",
+      image: "/images/team_casey.png",
+    },
   ];
 
   return (
@@ -38,31 +55,26 @@ export default function ProofSection() {
                 transition={springBounce}
                 style={{
                   position: 'relative',
-                  height: '340px',
+                  height: '350px',
                   borderRadius: '20px',
                   overflow: 'hidden',
-                  background: 'linear-gradient(135deg, var(--card) 0%, var(--card-hover) 100%)',
                   border: '1px solid var(--border)',
                   boxShadow: '0 20px 40px -20px rgba(0,0,0,0.15)',
+                  backgroundColor: 'var(--card)',
                 }}
               >
-                {/* Central placeholder graphic (matching image 2 design) */}
-                <div
+                {/* Real human headshot image */}
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   style={{
-                    position: 'absolute',
-                    inset: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    opacity: 0.15,
+                    objectFit: 'cover',
+                    objectPosition: 'top center',
+                    transition: 'transform 0.5s ease',
                   }}
-                >
-                  <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
-                    <rect x="3" y="3" width="18" height="18" rx="4" />
-                    <circle cx="8.5" cy="8.5" r="1.5" />
-                    <polyline points="21 15 16 10 5 21" />
-                  </svg>
-                </div>
+                />
 
                 {/* Dark bottom gradient overlay for readable text */}
                 <div
@@ -73,14 +85,15 @@ export default function ProofSection() {
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
                     padding: '24px',
-                    background: 'linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.35) 50%, transparent 100%)',
+                    background: 'linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.35) 55%, transparent 100%)',
                     color: '#ffffff',
+                    zIndex: 2,
                   }}
                 >
                   <h4 style={{ fontSize: '19px', fontWeight: '700', margin: 0, letterSpacing: '-0.01em', color: '#ffffff' }}>
                     {member.name}
                   </h4>
-                  <p style={{ fontSize: '13.5px', marginTop: '4px', margin: 0, color: 'rgba(255, 255, 255, 0.75)', fontFamily: 'var(--body)' }}>
+                  <p style={{ fontSize: '13.5px', marginTop: '4px', margin: 0, color: 'rgba(255, 255, 255, 0.82)', fontFamily: 'var(--body)' }}>
                     {member.role}
                   </p>
                 </div>
