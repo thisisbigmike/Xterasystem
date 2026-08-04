@@ -6,6 +6,54 @@ import GlobeLogo from './GlobeLogo';
 import FadeIn from './FadeIn';
 
 export default function Footer() {
+  const socialLinks = [
+    {
+      name: 'Instagram',
+      label: 'Instagram',
+      href: '#',
+      svg: (
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+        </svg>
+      ),
+    },
+    {
+      name: 'Twitter',
+      label: 'Twitter',
+      href: '#',
+      svg: (
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+        </svg>
+      ),
+    },
+    {
+      name: 'LinkedIn',
+      label: 'LinkedIn',
+      href: '#',
+      svg: (
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+          <rect x="2" y="9" width="4" height="12" />
+          <circle cx="4" cy="4" r="2" />
+        </svg>
+      ),
+    },
+    {
+      name: 'GitHub',
+      label: 'GitHub',
+      href: '#',
+      svg: (
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+          <path d="M9 18c-4.51 2-5-2-7-2" />
+        </svg>
+      ),
+    },
+  ];
+
   return (
     <footer style={{ borderTop: '1px solid var(--border)', backgroundColor: 'var(--bg)', paddingTop: '60px', paddingBottom: '40px' }}>
       <div className="wrap">
@@ -30,28 +78,39 @@ export default function Footer() {
               <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.6', margin: 0, maxWidth: '280px', textAlign: 'left' }}>
                 Empowering institutions and accredited investors to access curated real assets, private credit, and alternative markets with institutional governance.
               </p>
-              <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '8px' }}>
-                {/* Twitter / X */}
-                <a href="#" aria-label="X (Twitter)" style={{ color: 'var(--muted)', transition: 'color 0.2s' }}>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-                  </svg>
-                </a>
-                {/* LinkedIn */}
-                <a href="#" aria-label="LinkedIn" style={{ color: 'var(--muted)', transition: 'color 0.2s' }}>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                    <rect x="2" y="9" width="4" height="12" />
-                    <circle cx="4" cy="4" r="2" />
-                  </svg>
-                </a>
-                {/* GitHub */}
-                <a href="#" aria-label="GitHub" style={{ color: 'var(--muted)', transition: 'color 0.2s' }}>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                    <path d="M9 18c-4.51 2-5-2-7-2" />
-                  </svg>
-                </a>
+              {/* Animated Social Icon Buttons */}
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '8px' }}>
+                {socialLinks.map((social) => (
+                  <motion.a
+                    key={social.name}
+                    href={social.href}
+                    aria-label={social.label}
+                    whileHover={{
+                      y: -5,
+                      scale: 1.18,
+                      rotate: 4,
+                      backgroundColor: 'rgba(30, 215, 96, 0.15)',
+                      color: 'var(--green)',
+                    }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: 'spring', stiffness: 450, damping: 15 }}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'var(--muted)',
+                      textDecoration: 'none',
+                      backgroundColor: 'var(--bg-elevated)',
+                      border: '1px solid var(--border)',
+                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+                    }}
+                  >
+                    {social.svg}
+                  </motion.a>
+                ))}
               </div>
             </div>
 
