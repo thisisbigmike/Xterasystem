@@ -47,12 +47,12 @@ export default function WhySection() {
   ];
 
   return (
-    <section id="why">
+    <section id="why" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
       <div className="wrap">
         <FadeIn>
-          <div className="section-head">
+          <div className="section-head" style={{ marginBottom: '24px' }}>
             <div className="eyebrow">Why Xterasystem</div>
-            <h2>Built for transparency &amp; clarity</h2>
+            <h2 style={{ marginBottom: '8px' }}>Built for transparency &amp; clarity</h2>
           </div>
         </FadeIn>
 
@@ -61,8 +61,8 @@ export default function WhySection() {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: '20px',
-            marginBottom: '28px',
+            gap: '16px',
+            marginBottom: '20px',
           }}
           staggerChildren={0.1}
         >
@@ -72,21 +72,21 @@ export default function WhySection() {
                 whileHover={{ y: -4, borderColor: 'var(--border-strong)' }}
                 transition={springBounce}
                 style={{
-                  padding: '24px',
+                  padding: '20px 22px',
                   borderRadius: '16px',
                   backgroundColor: 'var(--card)',
                   border: '1px solid var(--border)',
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '12px',
+                  gap: '10px',
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.03)',
                 }}
               >
                 <div
                   style={{
-                    width: '40px',
-                    height: '40px',
+                    width: '36px',
+                    height: '36px',
                     borderRadius: '10px',
                     backgroundColor: 'rgba(30, 215, 96, 0.12)',
                     color: 'var(--green)',
@@ -96,15 +96,15 @@ export default function WhySection() {
                     flexShrink: 0,
                   }}
                 >
-                  <div style={{ width: '20px', height: '20px', display: 'flex', alignItems: 'center' }}>
+                  <div style={{ width: '18px', height: '18px', display: 'flex', alignItems: 'center' }}>
                     {feat.icon}
                   </div>
                 </div>
                 <div>
-                  <h4 style={{ fontSize: '17px', fontWeight: '600', marginBottom: '6px', color: 'var(--fg)', letterSpacing: '-0.01em' }}>
+                  <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '4px', color: 'var(--fg)', letterSpacing: '-0.01em' }}>
                     {feat.title}
                   </h4>
-                  <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.55', margin: 0, fontFamily: 'var(--body)' }}>
+                  <p style={{ fontSize: '13.5px', color: 'var(--muted)', lineHeight: '1.5', margin: 0, fontFamily: 'var(--body)' }}>
                     {feat.description}
                   </p>
                 </div>
@@ -122,16 +122,16 @@ export default function WhySection() {
               borderRadius: '20px',
               backgroundColor: 'var(--card)',
               border: '1px solid var(--border)',
-              padding: '32px',
+              padding: '28px 32px',
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '32px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '28px',
               alignItems: 'center',
               boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
             }}
           >
             {/* Left Column: Text + Risk Badge */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start', textAlign: 'left' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'flex-start', textAlign: 'left' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div
                   style={{
@@ -150,12 +150,12 @@ export default function WhySection() {
                     <path d="M21 21l-4.3-4.3" />
                   </svg>
                 </div>
-                <h3 style={{ fontSize: '21px', fontWeight: '700', margin: 0, color: 'var(--fg)', letterSpacing: '-0.015em' }}>
+                <h3 style={{ fontSize: '20px', fontWeight: '700', margin: 0, color: 'var(--fg)', letterSpacing: '-0.015em' }}>
                   Diligence-first presentation
                 </h3>
               </div>
 
-              <p style={{ fontSize: '15px', color: 'var(--muted)', lineHeight: '1.6', margin: 0, textAlign: 'left' }}>
+              <p style={{ fontSize: '14.5px', color: 'var(--muted)', lineHeight: '1.55', margin: 0, textAlign: 'left' }}>
                 Key terms, offering memorandums, structural risks, and compliance disclosures are surfaced upfront — not buried in footnotes or hidden behind paywalls.
               </p>
 
@@ -165,14 +165,14 @@ export default function WhySection() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',
-                  padding: '8px 16px',
+                  padding: '7px 14px',
                   borderRadius: '9999px',
                   backgroundColor: 'rgba(30, 215, 96, 0.12)',
                   border: '1px solid rgba(30, 215, 96, 0.25)',
                   fontSize: '13px',
                   fontWeight: '600',
                   color: 'var(--green)',
-                  marginTop: '4px',
+                  marginTop: '2px',
                 }}
               >
                 <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: 'var(--green)', display: 'inline-block' }}></span>
@@ -189,7 +189,7 @@ export default function WhySection() {
                 overflow: 'hidden',
                 border: '1px solid var(--border)',
                 position: 'relative',
-                height: '240px',
+                height: '220px',
                 backgroundColor: 'var(--bg-elevated)',
               }}
             >
@@ -208,12 +208,12 @@ export default function WhySection() {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'flex-end',
-                  padding: '18px 20px',
+                  padding: '16px 18px',
                   color: '#ffffff',
                 }}
               >
-                <b style={{ fontSize: '15px', fontWeight: '600', color: '#ffffff' }}>Institutional Due Diligence &amp; Financial Plans</b>
-                <span style={{ fontSize: '12.5px', color: 'rgba(255, 255, 255, 0.8)', marginTop: '2px' }}>
+                <b style={{ fontSize: '14.5px', fontWeight: '600', color: '#ffffff' }}>Institutional Due Diligence &amp; Financial Plans</b>
+                <span style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.8)', marginTop: '2px' }}>
                   Audited financial charts, risk matrices, and legal structure documentation.
                 </span>
               </div>
