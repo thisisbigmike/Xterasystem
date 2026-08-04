@@ -31,22 +31,7 @@ export default function UniverseSection() {
           </div>
         </FadeIn>
 
-        {/* Category mosaic */}
-        <FadeIn delay={0.1}>
-          <div className="mosaic" id="mosaic">
-            {Array.from({ length: 24 }).map((_, i) => {
-              const hue = categories[i % categories.length].hue;
-              return (
-                <motion.span
-                  key={i}
-                  style={{ background: hue, opacity: 0.3 + (i % 4) * 0.16 }}
-                  whileHover={{ opacity: 1, scale: 1.1 }}
-                  transition={{ duration: 0.2 }}
-                />
-              );
-            })}
-          </div>
-        </FadeIn>
+
 
         {/* Featured category tiles */}
         <StaggerContainer className="feature-row" id="featureRow" staggerChildren={0.08}>
