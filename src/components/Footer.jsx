@@ -85,6 +85,7 @@ export default function Footer() {
                     key={social.name}
                     href={social.href}
                     aria-label={social.label}
+                    className="social-link"
                     whileHover={{
                       y: -5,
                       scale: 1.18,
