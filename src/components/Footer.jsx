@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import GlobeLogo from './GlobeLogo';
 import FadeIn from './FadeIn';
 
 export default function Footer() {
@@ -17,41 +18,20 @@ export default function Footer() {
               paddingBottom: '48px',
             }}
           >
-            {/* Column 1: Brand & Socials */}
+            {/* Column 1: Xterasystem Brand & Socials */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'var(--fg)' }}>
-                <div
-                  style={{
-                    width: '36px',
-                    height: '36px',
-                    borderRadius: '50%',
-                    backgroundColor: 'var(--fg)',
-                    color: 'var(--bg)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 3c.132 4.093 2.907 6.868 7 7-4.093.132-6.868 2.907-7 7-.132-4.093-2.907-6.868-7-7 4.093-.132 6.868-2.907 7-7z" />
-                  </svg>
-                </div>
-                <span style={{ fontSize: '20px', fontWeight: '700', fontFamily: 'var(--display)' }}>Studio</span>
+                <GlobeLogo maskId="footer-globe-mask" />
+                <span style={{ fontSize: '20px', fontWeight: '700', fontFamily: 'var(--display)', letterSpacing: '-0.02em' }}>
+                  Xterasystem
+                </span>
               </Link>
               <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.6', margin: 0, maxWidth: '280px' }}>
-                We create beautiful, functional designs that help businesses grow and connect with their audience.
+                Empowering institutions and accredited investors to access curated real assets, private credit, and alternative markets with institutional governance.
               </p>
               <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginTop: '8px' }}>
-                {/* Instagram */}
-                <a href="#" aria-label="Instagram" style={{ color: 'var(--muted)', transition: 'color 0.2s' }}>
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                  </svg>
-                </a>
-                {/* Twitter */}
-                <a href="#" aria-label="Twitter" style={{ color: 'var(--muted)', transition: 'color 0.2s' }}>
+                {/* Twitter / X */}
+                <a href="#" aria-label="X (Twitter)" style={{ color: 'var(--muted)', transition: 'color 0.2s' }}>
                   <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
                   </svg>
@@ -74,24 +54,24 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Column 2: Company & Services */}
+            {/* Column 2: Company & Investment Universe */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
               <div>
                 <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)' }}>Company</h4>
                 <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <a href="#about" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>About Us</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Careers</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Our Process</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>News &amp; Press</a>
+                  <a href="#about" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>About Xterasystem</a>
+                  <a href="#structures" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Legal Architecture</a>
+                  <a href="#team" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Custodial Partners</a>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Institutional Governance</a>
                 </nav>
               </div>
               <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)' }}>Services</h4>
+                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)' }}>Investment Universe</h4>
                 <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>UI/UX Design</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Web Development</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Brand Identity</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Digital Marketing</a>
+                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Real Estate &amp; Infrastructure</a>
+                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Private Equity &amp; Credit</a>
+                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Renewable Energy</a>
+                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Venture Capital</a>
                 </nav>
               </div>
             </div>
@@ -101,32 +81,32 @@ export default function Footer() {
               <div>
                 <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)' }}>Resources</h4>
                 <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Blog</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Case Studies</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Guides &amp; Tutorials</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>FAQ</a>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Market Insights</a>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Due Diligence Framework</a>
+                  <a href="#faq" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Investor FAQ</a>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Asset Class Guides</a>
                 </nav>
               </div>
               <div>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)' }}>Legal</h4>
+                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)' }}>Legal &amp; Compliance</h4>
                 <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Privacy Policy</a>
                   <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Terms of Service</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Cookie Policy</a>
+                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none' }}>Risk Disclosures</a>
                 </nav>
               </div>
             </div>
 
             {/* Column 4: Newsletter */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <h4 style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: 'var(--fg)' }}>Subscribe to our newsletter</h4>
+              <h4 style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: 'var(--fg)' }}>Subscribe to market intelligence</h4>
               <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.5', margin: 0, maxWidth: '300px' }}>
-                Stay updated with our latest projects, design tips, and company news.
+                Receive weekly market analysis, deal summaries, and institutional alternative asset reports.
               </p>
               <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', gap: '10px', marginTop: '6px', flexWrap: 'wrap' }}>
                 <input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Enter your business email"
                   style={{
                     flex: '1 1 180px',
                     padding: '10px 18px',
@@ -160,6 +140,18 @@ export default function Footer() {
             </div>
           </div>
 
+          <p
+            style={{
+              fontSize: '12px',
+              color: 'var(--muted)',
+              lineHeight: '1.6',
+              marginBottom: '24px',
+              opacity: 0.8,
+            }}
+          >
+            Investing in alternative assets involves risk, including possible loss of principal. Past performance is no guarantee of future results. Offerings are available only to qualified investors in eligible jurisdictions.
+          </p>
+
           <div
             style={{
               borderTop: '1px solid var(--border)',
@@ -173,11 +165,11 @@ export default function Footer() {
               color: 'var(--muted)',
             }}
           >
-            <p style={{ margin: 0 }}>&copy; {new Date().getFullYear()} Studio Design Agency. All rights reserved.</p>
+            <p style={{ margin: 0 }}>&copy; {new Date().getFullYear()} Xterasystem Inc. All rights reserved.</p>
             <div style={{ display: 'flex', gap: '20px' }}>
               <a href="#" style={{ color: 'var(--muted)', textDecoration: 'none' }}>Privacy Policy</a>
               <a href="#" style={{ color: 'var(--muted)', textDecoration: 'none' }}>Terms of Service</a>
-              <a href="#" style={{ color: 'var(--muted)', textDecoration: 'none' }}>Cookie Settings</a>
+              <a href="#" style={{ color: 'var(--muted)', textDecoration: 'none' }}>Risk Disclosure</a>
             </div>
           </div>
         </FadeIn>

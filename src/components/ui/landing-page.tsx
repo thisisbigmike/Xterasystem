@@ -94,7 +94,7 @@ export function DesignAgency() {
               >
                 <Sparkles className="h-5 w-5 text-primary-foreground" />
               </motion.div>
-              <span className="font-bold text-xl">Studio</span>
+              <span className="font-bold text-xl">Xterasystem</span>
             </Link>
           </div>
           <nav className="hidden md:flex gap-3">
@@ -143,7 +143,7 @@ export function DesignAgency() {
                 <div className="h-10 w-10 rounded-3xl bg-primary flex items-center justify-center">
                   <Sparkles className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <span className="font-bold text-xl">Studio</span>
+                <span className="font-bold text-xl">Xterasystem</span>
               </Link>
             </div>
             <button onClick={toggleMenu}>
