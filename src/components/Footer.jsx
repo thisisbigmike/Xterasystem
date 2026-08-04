@@ -158,41 +158,45 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Column 4: Newsletter */}
+            {/* Column 4: Newsletter Subscription Form */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'flex-start', textAlign: 'left' }}>
-              <h4 style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: 'var(--fg)', textAlign: 'left' }}>Subscribe to market intelligence</h4>
+              <h4 style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: 'var(--fg)', textAlign: 'left' }}>Subscribe to our newsletter</h4>
               <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.5', margin: 0, maxWidth: '300px', textAlign: 'left' }}>
-                Receive weekly market analysis, deal summaries, and institutional alternative asset reports.
+                Stay updated with our latest projects, design tips, and company news.
               </p>
-              <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', gap: '10px', marginTop: '6px', flexWrap: 'wrap', width: '100%' }}>
+              <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', gap: '12px', marginTop: '8px', alignItems: 'center', flexWrap: 'wrap', width: '100%' }}>
                 <input
                   type="email"
-                  placeholder="Enter your business email"
+                  placeholder="Enter your email"
                   style={{
-                    flex: '1 1 180px',
-                    padding: '10px 18px',
+                    flex: '1 1 170px',
+                    padding: '11px 20px',
                     borderRadius: '9999px',
-                    border: '1px solid var(--border)',
+                    border: '1px solid var(--border-strong)',
                     backgroundColor: 'var(--bg)',
                     color: 'var(--fg)',
                     fontSize: '14px',
                     outline: 'none',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
                   }}
                 />
                 <motion.button
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                   type="submit"
                   style={{
-                    padding: '10px 24px',
+                    padding: '11px 26px',
                     borderRadius: '9999px',
-                    backgroundColor: 'var(--fg)',
-                    color: 'var(--bg)',
+                    backgroundColor: '#111827',
+                    color: '#ffffff',
                     fontWeight: '600',
                     fontSize: '14px',
                     border: 'none',
                     cursor: 'pointer',
                     whiteSpace: 'nowrap',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+                    flexShrink: 0,
                   }}
                 >
                   Subscribe
