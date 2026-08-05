@@ -1482,46 +1482,98 @@
       color: var(--text-muted);
     }
 
-    /* ---------- HOW IT WORKS (queue style) ---------- */
-    .queue {
+    /* ---------- HOW IT WORKS (two-column grid & vertical connected timeline) ---------- */
+    .how-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 340px) 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 860px) {
+      .how-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    .how-image-col {
+      width: 100%;
+    }
+
+    .how-image-col .photo-card {
+      width: 100%;
+      margin-bottom: 0;
+    }
+
+    .timeline-steps {
+      position: relative;
       display: flex;
       flex-direction: column;
     }
 
-    .queue-item {
+    .timeline-step {
+      position: relative;
       display: grid;
-      grid-template-columns: 40px 1fr;
+      grid-template-columns: 44px 1fr;
       gap: 20px;
-      padding: 22px 0;
-      border-bottom: 1px solid var(--border);
+      padding-bottom: 28px;
     }
 
-    .queue-item:first-child {
-      border-top: 1px solid var(--border);
+    .timeline-step:last-child {
+      padding-bottom: 0;
     }
 
-    .queue-num {
+    /* Vertical line connecting step numbers */
+    .timeline-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 17px;
+      bottom: 0;
+      width: 2px;
+      background: var(--border-strong);
+      z-index: 1;
+    }
+
+    .timeline-marker {
+      position: relative;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-elevated);
+      border: 1.5px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: var(--mono);
-      color: var(--text-faint);
-      font-size: 14px;
-      padding-top: 2px;
-    }
-
-    .queue-item.next .queue-num {
+      font-size: 13px;
+      font-weight: 600;
       color: var(--green);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: all 0.25s ease;
     }
 
-    .queue-body h4 {
+    .timeline-step:hover .timeline-marker {
+      border-color: var(--green);
+      background: var(--green-dim);
+      transform: scale(1.05);
+    }
+
+    .timeline-content h4 {
       font-family: var(--display);
       font-size: 16.5px;
       font-weight: 600;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
+      color: var(--text);
     }
 
-    .queue-body p {
+    .timeline-content p {
       color: var(--text-muted);
       font-size: 14px;
-      max-width: 560px;
+      line-height: 1.5;
     }
 
     .queue-reassure {

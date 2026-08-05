@@ -16,100 +16,76 @@ export default function HowItWorksSection() {
           </div>
         </FadeIn>
 
-        {/* Success steps motivational image */}
-        <FadeIn delay={0.1}>
-          <motion.div
-            className="photo-card"
-            style={{ maxWidth: '480px', marginBottom: '36px' }}
-            whileHover={{ y: -4, boxShadow: '0 30px 60px -20px rgba(0, 0, 0, 0.2)' }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="photo-frame" style={{ '--ar': '4/5' }}>
-              <Image
-                src="/images/img-success-steps.jpg"
-                alt="The right steps will always lead to success — Dreams, Goal, Plan, Action, Success"
-                width={480}
-                height={600}
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-              />
-            </div>
-            <div className="photo-caption">
-              <b>Your path to success</b>
-              Follow the structured journey from browsing to investing with confidence.
-            </div>
-          </motion.div>
-        </FadeIn>
+        <div className="how-grid">
+          {/* Hero image card column */}
+          <FadeIn delay={0.1} className="how-image-col">
+            <motion.div
+              className="photo-card"
+              style={{ maxWidth: '340px', width: '100%' }}
+              whileHover={{ y: -4, boxShadow: '0 30px 60px -20px rgba(0, 0, 0, 0.2)' }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="photo-frame" style={{ '--ar': '1/1' }}>
+                <Image
+                  src="/images/how-it-works-hero.png"
+                  alt="Structured investment journey visualization"
+                  width={340}
+                  height={340}
+                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                />
+              </div>
+              <div className="photo-caption">
+                <b>Your path to success</b>
+                Follow the structured journey from browsing to investing with confidence.
+              </div>
+            </motion.div>
+          </FadeIn>
 
-        {/* 5-step flow diagram with staggered entrance */}
-        <StaggerContainer className="flow-diagram" staggerChildren={0.1}>
-          <StaggerItem className="flow-node">
-            <div className="fn-num">01</div>
-            <div className="fn-label">Create account</div>
-          </StaggerItem>
-          <div className="flow-arrow"></div>
-          <StaggerItem className="flow-node">
-            <div className="fn-num">02</div>
-            <div className="fn-label">Browse universe</div>
-          </StaggerItem>
-          <div className="flow-arrow"></div>
-          <StaggerItem className="flow-node">
-            <div className="fn-num">03</div>
-            <div className="fn-label">Review details</div>
-          </StaggerItem>
-          <div className="flow-arrow"></div>
-          <StaggerItem className="flow-node">
-            <div className="fn-num">04</div>
-            <div className="fn-label">Choose</div>
-          </StaggerItem>
-          <div className="flow-arrow"></div>
-          <StaggerItem className="flow-node next">
-            <div className="fn-num">05</div>
-            <div className="fn-label">Complete KYC</div>
-          </StaggerItem>
-        </StaggerContainer>
+          {/* Connected vertical timeline column */}
+          <div className="how-timeline-col">
+            <StaggerContainer className="timeline-steps" staggerChildren={0.1}>
+              <StaggerItem className="timeline-step">
+                <div className="timeline-marker">01</div>
+                <div className="timeline-content">
+                  <h4>Create your account</h4>
+                  <p>Sign up with just an email and password — nothing else required to start looking around.</p>
+                </div>
+              </StaggerItem>
+              <StaggerItem className="timeline-step">
+                <div className="timeline-marker">02</div>
+                <div className="timeline-content">
+                  <h4>Browse the investment universe</h4>
+                  <p>Filter by asset class, structure, region, or liquidity. Compare opportunities side by side.</p>
+                </div>
+              </StaggerItem>
+              <StaggerItem className="timeline-step">
+                <div className="timeline-marker">03</div>
+                <div className="timeline-content">
+                  <h4>Review opportunity details</h4>
+                  <p>Understand the structure upfront (direct ownership, fund, lending, revenue-share), key terms, risk factors, and available documentation.</p>
+                </div>
+              </StaggerItem>
+              <StaggerItem className="timeline-step">
+                <div className="timeline-marker">04</div>
+                <div className="timeline-content">
+                  <h4>Choose an opportunity</h4>
+                  <p>Select something you&apos;re eligible for, with terms you understand and are comfortable with.</p>
+                </div>
+              </StaggerItem>
+              <StaggerItem className="timeline-step">
+                <div className="timeline-marker">05</div>
+                <div className="timeline-content">
+                  <h4>Complete KYC</h4>
+                  <p>Verification happens only when you decide to invest, not before.</p>
+                </div>
+              </StaggerItem>
+            </StaggerContainer>
 
-        {/* Queue numbered steps */}
-        <StaggerContainer className="queue" staggerChildren={0.1}>
-          <StaggerItem className="queue-item">
-            <div className="queue-num">01</div>
-            <div className="queue-body">
-              <h4>Create your account</h4>
-              <p>Sign up with just an email and password nothing else required to start looking around.</p>
-            </div>
-          </StaggerItem>
-          <StaggerItem className="queue-item">
-            <div className="queue-num">02</div>
-            <div className="queue-body">
-              <h4>Browse the investment universe</h4>
-              <p>Filter by asset class, structure, region, or liquidity. Compare opportunities side by side.</p>
-            </div>
-          </StaggerItem>
-          <StaggerItem className="queue-item">
-            <div className="queue-num">03</div>
-            <div className="queue-body">
-              <h4>Review opportunity details</h4>
-              <p>Understand the structure upfront (direct ownership, fund, lending, revenue-share), key terms, risk factors, and available documentation.</p>
-            </div>
-          </StaggerItem>
-          <StaggerItem className="queue-item">
-            <div className="queue-num">04</div>
-            <div className="queue-body">
-              <h4>Choose an opportunity</h4>
-              <p>Select something you&apos;re eligible for, with terms you understand and are comfortable with.</p>
-            </div>
-          </StaggerItem>
-          <StaggerItem className="queue-item next">
-            <div className="queue-num">05</div>
-            <div className="queue-body">
-              <h4>Complete KYC</h4>
-              <p>Verification happens only when you decide to invest not before.</p>
-            </div>
-          </StaggerItem>
-        </StaggerContainer>
-
-        <FadeIn delay={0.2}>
-          <div className="queue-reassure">→ You can browse and learn first. Verification happens later.</div>
-        </FadeIn>
+            <FadeIn delay={0.2}>
+              <div className="queue-reassure">→ You can browse and learn first. Verification happens later.</div>
+            </FadeIn>
+          </div>
+        </div>
 
         <div className="how-pair">
           {/* Training photo card */}
