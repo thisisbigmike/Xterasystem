@@ -29,7 +29,7 @@ const browsing = [
 const filters = ['All', 'Direct asset', 'Fund', 'Lending', 'Revenue-share'];
 
 const opportunity = [
-  ['Target return', '12.4% p.a.'],
+  ['Liquidity', 'Quarterly window'],
   ['Min. invest', '$500'],
 ];
 
@@ -51,17 +51,6 @@ export default function HeroSection() {
           sizes="100vw"
         />
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-(image:--scrim)" />
-
-        {/* 12-column divider grid (1/3/4/3/1), aligned to the page frame. Hidden on small screens. */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 hidden justify-center md:flex">
-          <div className="grid h-full w-full max-w-[1280px] grid-cols-12 divide-x divide-white/20 border-x border-white/20">
-            <div className="col-span-1" />
-            <div className="col-span-3" />
-            <div className="col-span-4" />
-            <div className="col-span-3" />
-            <div className="col-span-1" />
-          </div>
-        </div>
 
         <div className="frame flex flex-1 flex-col items-center justify-center pt-32 pb-56 text-center lg:border-x-0 lg:pb-64">
           <FadeIn direction="down">
@@ -102,10 +91,12 @@ export default function HeroSection() {
         </div>
       </section>
 
-      {/* Product preview: floats over the bottom edge of the hero. */}
+      {/* Product preview: floats over the bottom edge of the hero. Solid, not glass:
+          it straddles the dark photo and the page background, and a translucent fill
+          turns gray over a light page. */}
       <div className="frame relative z-10 -mt-44 lg:-mt-52 lg:border-x-0">
         <FadeIn delay={0.5}>
-          <div className="on-dark mx-auto max-w-5xl overflow-hidden rounded-xl border border-white/15 bg-surface/80 shadow-float backdrop-blur-xl">
+          <div className="on-dark mx-auto max-w-5xl overflow-hidden rounded-xl border border-white/15 bg-surface shadow-float">
             <div className="flex items-center gap-4 border-b border-border px-5 py-3">
               <div aria-hidden="true" className="flex gap-1.5">
                 <span className="size-2.5 rounded-full bg-white/20" />
@@ -116,13 +107,10 @@ export default function HeroSection() {
             </div>
 
             <div className="grid md:grid-cols-3 md:divide-x md:divide-border">
-              <div className="p-5 md:col-span-2 md:p-6">
+              <div className="min-w-0 p-5 md:col-span-2 md:p-6">
                 <div className="flex items-center justify-between gap-4">
                   <span className="eyebrow text-subtle">Browsing now</span>
-                  <span className="flex items-center gap-2 text-xs font-medium text-accent">
-                    <span aria-hidden="true" className="size-1.5 animate-pulse-dot rounded-full bg-accent" />
-                    Live universe
-                  </span>
+                  <span className="text-xs font-medium text-subtle">Sample listings</span>
                 </div>
 
                 <SegmentedControl
@@ -167,7 +155,7 @@ export default function HeroSection() {
               </div>
 
               <div className="border-t border-border p-5 md:border-t-0 md:p-6">
-                <div className="rounded-lg border border-border bg-background/60 p-5">
+                <div className="rounded-lg border border-border bg-background p-5">
                   <p className="eyebrow text-subtle">Opportunity</p>
                   <h3 className="mt-2 text-xl font-semibold">Rooftop Solar Fund II</h3>
                   <dl className="mt-4 text-sm">
@@ -185,6 +173,7 @@ export default function HeroSection() {
                   <span className="mt-5 flex h-10 items-center justify-center rounded-full bg-accent text-sm font-semibold text-on-accent">
                     View details
                   </span>
+                  <p className="mt-3 text-center text-xs text-subtle">Illustrative example. Not an offer to invest.</p>
                 </div>
               </div>
             </div>

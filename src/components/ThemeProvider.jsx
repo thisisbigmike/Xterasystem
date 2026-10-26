@@ -32,9 +32,6 @@ export function ThemeProvider({ children }) {
     }
 
     updateThemeUI(themeMode);
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, themeMode);
-    } catch {}
 
     const handleSystemChange = () => {
       if (themeMode === 'system') {
@@ -46,8 +43,13 @@ export function ThemeProvider({ children }) {
     return () => systemQuery.removeEventListener('change', handleSystemChange);
   }, [themeMode, mounted]);
 
+  // Persist only an explicit choice, so the default can change later without
+  // being overridden by a value nobody picked.
   const setThemeMode = (mode) => {
     setThemeModeState(mode);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, mode);
+    } catch {}
   };
 
   return (

@@ -32,7 +32,6 @@
   --revenue: #B2442A;
 
   --header-bg: rgba(246, 248, 247, 0.85);
-  --glass: rgba(10, 15, 14, 0.62);
   --scrim: linear-gradient(180deg, rgba(4, 7, 6, 0.6) 0%, rgba(4, 7, 6, 0.5) 45%, rgba(4, 7, 6, 0.92) 100%);
   --media-scrim: linear-gradient(to top, rgba(4, 7, 6, 0.85) 0%, rgba(4, 7, 6, 0.2) 60%, transparent 100%);
 }
@@ -92,7 +91,6 @@
   --color-lending: var(--lending);
   --color-revenue: var(--revenue);
   --color-header: var(--header-bg);
-  --color-glass: var(--glass);
 
   /* Type: one display face for headlines, one sans for everything else. */
   --font-*: initial;
@@ -137,14 +135,8 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  --animate-pulse-dot: pulse-dot 1.8s var(--ease-in-out) infinite;
   --animate-shimmer: shimmer 1.4s var(--ease-in-out) infinite;
   --animate-spin: spin 0.7s linear infinite;
-
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
 
   @keyframes shimmer {
     from { background-position: 200% 0; }

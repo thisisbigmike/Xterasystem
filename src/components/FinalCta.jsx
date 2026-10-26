@@ -9,14 +9,6 @@ export default function FinalCta() {
     <section className="border-t border-border">
       <div className="frame py-16 sm:py-24">
         <FadeIn className="relative overflow-hidden rounded-xl border border-border bg-surface px-6 py-16 text-center sm:px-12 sm:py-20">
-          {/* Same 1/3/4/3/1 divider grid as the hero, faint, to close the page on the same motif. */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden grid-cols-12 divide-x divide-border md:grid">
-            <div className="col-span-1" />
-            <div className="col-span-3" />
-            <div className="col-span-4" />
-            <div className="col-span-3" />
-            <div className="col-span-1" />
-          </div>
           <div className="relative">
             <p className="eyebrow text-accent">Start today</p>
             <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-semibold tracking-display">

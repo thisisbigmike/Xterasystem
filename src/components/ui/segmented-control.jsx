@@ -27,7 +27,11 @@ export function SegmentedControl({ options, value, onChange, label, controls, cl
     <div
       role="tablist"
       aria-label={label}
-      className={cn('relative flex w-full items-center gap-0.5 overflow-x-auto rounded-full border border-border bg-white/5 p-0.5', className)}
+      className={cn(
+        'relative flex w-full items-center gap-0.5 overflow-x-auto rounded-full border border-border bg-foreground/5 p-0.5',
+        '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+        className,
+      )}
     >
       {options.map((option, i) => {
         const active = option === value;
