@@ -2,133 +2,166 @@
 
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import {
+  Gem, Zap, Wheat, Building2, Truck, Cpu, Bitcoin, HeartPulse, Landmark, ChartLine, Clapperboard, Palette,
+} from 'lucide-react';
 import { categories } from '@/data/categories';
-import SectionHead from './SectionHead';
+import { Section, SectionHeader } from './ui/section';
 import { SkeletonImage } from './Skeleton';
-import FadeIn, { StaggerContainer, StaggerItem } from './FadeIn';
-import { stagger, transition } from '@/lib/motion';
+import FadeIn from './FadeIn';
+import { cn } from '@/lib/utils';
+import { transition } from '@/lib/motion';
 
-const featured = categories
-  .map((cat, index) => ({ ...cat, index }))
-  .filter((cat) => cat.image);
+// Each category gets its own treatment: a photo where one exists, otherwise
+// a distinct icon plus a gradient anchored to a different corner.
+const treatments = {
+  'Precious Metals': { Icon: Gem, glow: '0% 0%' },
+  'Energy & Natural Resources': { Icon: Zap, span: 'sm:col-span-2 lg:row-span-2' },
+  'Agriculture & Food': { Icon: Wheat, span: 'sm:col-span-2' },
+  'Real Estate & Property': { Icon: Building2, span: 'sm:col-span-2 lg:row-span-2' },
+  'Transportation & Logistics': { Icon: Truck, glow: '100% 0%' },
+  'Technology & Digital Infra': { Icon: Cpu, span: 'sm:col-span-2' },
+  'Digital Assets': { Icon: Bitcoin, glow: '0% 100%' },
+  'Healthcare & Biotech': { Icon: HeartPulse, glow: '100% 100%' },
+  'Infrastructure & Public Services': { Icon: Landmark, glow: '50% 0%' },
+  'Financial Assets': { Icon: ChartLine, glow: '50% 100%' },
+  'Media, Entertainment & IP': { Icon: Clapperboard, glow: '0% 50%' },
+  'Alternative & Special Assets': { Icon: Palette, glow: '100% 50%' },
+};
+
+function Tile({ cat, selected }) {
+  const { Icon, glow } = treatments[cat.name];
+  if (cat.image) {
+    return (
+      <>
+        <SkeletonImage
+          className="absolute inset-0"
+          src={cat.image}
+          alt=""
+          fill
+          sizes="(max-width: 640px) 100vw, 50vw"
+          imgClassName="transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+        />
+        <span aria-hidden="true" className="absolute inset-0 bg-(image:--media-scrim)" />
+        <span className="on-dark relative mt-auto flex flex-col gap-1 p-5">
+          <span className="font-display text-lg font-semibold text-foreground">{cat.name}</span>
+          <span className="text-xs text-muted">{cat.items.length} listed</span>
+        </span>
+      </>
+    );
+  }
+  return (
+    <>
+      <span
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{ background: `radial-gradient(120% 120% at ${glow}, var(--accent-soft), transparent 60%)` }}
+      />
+      <span
+        className={cn(
+          'relative flex size-10 items-center justify-center rounded-sm border border-border bg-background/60 transition-colors',
+          selected ? 'text-accent' : 'text-muted group-hover:text-accent',
+        )}
+      >
+        <Icon aria-hidden="true" className="size-5" />
+      </span>
+      <span className="relative mt-auto flex flex-col gap-1">
+        <span className="font-display text-base font-semibold text-foreground">{cat.name}</span>
+        <span className="text-xs text-muted">{cat.items.length} listed</span>
+      </span>
+    </>
+  );
+}
 
 export default function UniverseSection() {
   const [selectedIdx, setSelectedIdx] = useState(0);
   const tabRefs = useRef([]);
-  const panelRef = useRef(null);
   const selected = categories[selectedIdx];
 
-  const selectFromFeatured = (index) => {
-    setSelectedIdx(index);
-    panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  };
-
   // Roving focus per the WAI-ARIA tabs pattern.
-  const onTabKeyDown = (e) => {
+  const onKeyDown = (e) => {
     const last = categories.length - 1;
-    const moves = {
+    const next = {
       ArrowRight: selectedIdx === last ? 0 : selectedIdx + 1,
       ArrowDown: selectedIdx === last ? 0 : selectedIdx + 1,
       ArrowLeft: selectedIdx === 0 ? last : selectedIdx - 1,
       ArrowUp: selectedIdx === 0 ? last : selectedIdx - 1,
       Home: 0,
       End: last,
-    };
-    if (!(e.key in moves)) return;
+    }[e.key];
+    if (next === undefined) return;
     e.preventDefault();
-    setSelectedIdx(moves[e.key]);
-    tabRefs.current[moves[e.key]]?.focus();
+    setSelectedIdx(next);
+    tabRefs.current[next]?.focus();
   };
 
   return (
-    <section className="section" id="universe">
-      <div className="wrap">
-        <SectionHead
-          eyebrow="Investment universe"
-          title="A broad universe, organized for clarity"
-          note="Exact availability, minimums, and eligibility depend on your country or region and on each opportunity."
+    <Section id="universe">
+      <SectionHeader
+        eyebrow="Investment universe"
+        title="A broad universe, organized for clarity"
+        note="Exact availability, minimums, and eligibility depend on your country/region and on each opportunity."
+      >
+        Xterasystem showcases opportunities across asset classes. Some are direct assets: property, vehicles, land.
+        Others are businesses, projects, funds, or revenue streams. Each opportunity page states exactly what
+        you&apos;re buying into and how it works.
+      </SectionHeader>
+
+      <FadeIn>
+        {/* Bento: 1px gaps over the border color draw the divider grid between tiles. */}
+        <div
+          role="tablist"
+          aria-label="Asset classes"
+          className="grid grid-flow-dense auto-rows-[10.5rem] grid-cols-1 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4"
         >
-          Xterasystem lists opportunities across asset classes. Some are direct assets such as property, vehicles,
-          and land. Others are businesses, projects, funds, or revenue streams. Each opportunity page states what
-          you&apos;re buying into and how it works.
-        </SectionHead>
-
-        <StaggerContainer className="featured-grid" staggerChildren={stagger.grid}>
-          {featured.map((cat) => (
-            <StaggerItem key={cat.name}>
-              <button
-                type="button"
-                className="featured-card card-interactive"
-                aria-current={selectedIdx === cat.index}
-                aria-controls="cat-panel"
-                onClick={() => selectFromFeatured(cat.index)}
-              >
-                <SkeletonImage
-                  src={cat.image}
-                  alt=""
-                  fill
-                  sizes="(max-width: 900px) 50vw, 25vw"
-                  className="media-fill"
-                >
-                  <span className="media-caption">
-                    <strong>{cat.name}</strong>
-                    <span>{cat.items.length} asset types</span>
-                  </span>
-                </SkeletonImage>
-              </button>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-
-        <FadeIn>
-          <div className="cat-tabs" role="tablist" aria-label="Asset classes">
-            {categories.map((cat, i) => (
+          {categories.map((cat, i) => {
+            const isSelected = i === selectedIdx;
+            return (
               <button
                 key={cat.name}
                 ref={(el) => { tabRefs.current[i] = el; }}
                 id={`cat-tab-${i}`}
                 type="button"
                 role="tab"
-                className="cat-tab"
-                aria-selected={i === selectedIdx}
+                aria-selected={isSelected}
                 aria-controls="cat-panel"
-                tabIndex={i === selectedIdx ? 0 : -1}
+                tabIndex={isSelected ? 0 : -1}
                 onClick={() => setSelectedIdx(i)}
-                onKeyDown={onTabKeyDown}
+                onKeyDown={onKeyDown}
+                className={cn(
+                  'group relative flex cursor-pointer flex-col overflow-hidden bg-surface p-5 text-left transition-colors hover:bg-surface-2',
+                  cat.image && 'p-0',
+                  treatments[cat.name].span,
+                  isSelected && 'z-10 outline-2 -outline-offset-2 outline-accent',
+                )}
               >
-                <span className="cat-tab-name">{cat.name}</span>
-                <span className="cat-tab-count">{cat.items.length} asset types</span>
+                <Tile cat={cat} selected={isSelected} />
               </button>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
-          <div
-            ref={panelRef}
-            id="cat-panel"
-            className="card cat-panel"
-            role="tabpanel"
-            aria-labelledby={`cat-tab-${selectedIdx}`}
-          >
-            {/* Keyed fade-in only: an exit phase can strand stale content when tabs change quickly. */}
-            <motion.div
-              key={selected.name}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={transition.fast}
-            >
-              <div className="cat-panel-head">
-                <h3>{selected.name}</h3>
-                <span className="eyebrow">{selected.items.length} asset types</span>
-              </div>
-              <ul className="chip-row">
-                {selected.items.map((item) => (
-                  <li key={item} className="chip">{item}</li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </FadeIn>
-      </div>
-    </section>
+        <div
+          id="cat-panel"
+          role="tabpanel"
+          aria-labelledby={`cat-tab-${selectedIdx}`}
+          className="mt-6 rounded-xl border border-border bg-surface p-6 sm:p-8"
+        >
+          <motion.div key={selected.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={transition.fast}>
+            <div className="mb-5 flex flex-wrap items-baseline justify-between gap-2">
+              <h3 className="text-xl font-semibold">{selected.name}</h3>
+              <span className="eyebrow text-accent">{selected.items.length} opportunities</span>
+            </div>
+            <ul className="flex flex-wrap gap-2">
+              {selected.items.map((item) => (
+                <li key={item} className="rounded-full border border-border px-3 py-1.5 text-sm text-muted">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        </div>
+      </FadeIn>
+    </Section>
   );
 }

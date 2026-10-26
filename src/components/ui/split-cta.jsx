@@ -1,48 +1,19 @@
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const variants = {
-  // Fixed white pill for photo/dark backgrounds (the hero).
-  onDark: {
-    pill: 'bg-white text-black hover:bg-black hover:text-white',
-    dot: 'bg-black text-white group-hover:bg-white group-hover:text-black',
-  },
-  // Follows the theme: inverse of the page background.
-  theme: {
-    pill: 'bg-foreground text-background hover:bg-accent hover:text-on-accent',
-    dot: 'bg-background text-foreground group-hover:bg-on-accent group-hover:text-accent',
-  },
-};
+// Pill split CTA from the 21st.dev Aero Hero: a label pill with a separate circular
+// arrow beside it. On hover both invert (accent fill ↔ ink fill) and the arrow exits
+// up-right while a second one enters from below-left.
+const half =
+  'flex h-12 items-center rounded-full bg-accent text-on-accent ring-1 ring-accent ring-inset transition-colors duration-300 ease-out group-hover:bg-on-accent group-hover:text-accent';
 
-// Pill split CTA from the 21st.dev Aero Hero: label + circular arrow. On hover the
-// colors invert and the arrow exits up-right while a second one enters from below-left.
-export function SplitCta({ href, children, variant = 'onDark', className }) {
-  const v = variants[variant];
+export function SplitCta({ href, children, className }) {
   return (
-    <a
-      href={href}
-      className={cn(
-        'group inline-flex h-12 items-center justify-between gap-3 rounded-full py-1 pr-1 pl-6 text-sm font-semibold',
-        'transition-colors duration-300 ease-out',
-        v.pill,
-        className,
-      )}
-    >
-      {children}
-      <span
-        className={cn(
-          'relative flex size-10 items-center justify-center overflow-hidden rounded-full transition-colors duration-300 ease-out',
-          v.dot,
-        )}
-      >
-        <ArrowUpRight
-          aria-hidden="true"
-          className="size-4 transition-transform duration-300 ease-out group-hover:translate-x-5 group-hover:-translate-y-5"
-        />
-        <ArrowUpRight
-          aria-hidden="true"
-          className="absolute size-4 -translate-x-5 translate-y-5 transition-transform duration-300 ease-out group-hover:translate-x-0 group-hover:translate-y-0"
-        />
+    <a href={href} className={cn('group inline-flex items-center gap-1 text-sm font-semibold', className)}>
+      <span className={cn(half, 'px-6')}>{children}</span>
+      <span aria-hidden="true" className={cn(half, 'relative size-12 justify-center overflow-hidden')}>
+        <ArrowUpRight className="size-4 transition-transform duration-300 ease-out group-hover:translate-x-6 group-hover:-translate-y-6" />
+        <ArrowUpRight className="absolute size-4 -translate-x-6 translate-y-6 transition-transform duration-300 ease-out group-hover:translate-x-0 group-hover:translate-y-0" />
       </span>
     </a>
   );

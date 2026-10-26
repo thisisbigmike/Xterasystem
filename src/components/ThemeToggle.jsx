@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon, Monitor } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
-import { ease, duration } from '@/lib/motion';
+import { transition } from '@/lib/motion';
+import { cn } from '@/lib/utils';
 
 const options = [
   { mode: 'light', label: 'Light', Icon: Sun },
@@ -34,36 +35,39 @@ export default function ThemeToggle() {
     };
   }, [open]);
 
-  const CurrentIcon = (options.find((o) => o.mode === themeMode) || options[2]).Icon;
+  const CurrentIcon = (options.find((o) => o.mode === themeMode) || options[1]).Icon;
 
   return (
-    <div className="theme-menu-wrap" ref={wrapRef}>
+    <div className="relative" ref={wrapRef}>
       <button
-        className="icon-btn"
+        className="flex size-10 cursor-pointer items-center justify-center rounded-full border border-border text-foreground transition-colors hover:bg-foreground/5"
         type="button"
         aria-label="Color theme"
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
       >
-        <CurrentIcon className="icon-sm" />
+        <CurrentIcon className="size-4" />
       </button>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            className="theme-menu"
+            className="absolute top-[calc(100%+0.5rem)] right-0 z-10 flex min-w-36 flex-col gap-0.5 rounded-lg border border-border-strong bg-surface p-1 shadow-float"
             role="menu"
             aria-label="Color theme"
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: duration.fast, ease: ease.out }}
+            transition={transition.fast}
           >
             {options.map(({ mode, label, Icon }) => (
               <button
                 key={mode}
-                className="theme-option"
+                className={cn(
+                  'flex w-full cursor-pointer items-center gap-2 rounded-sm px-3 py-2 text-left text-sm transition-colors',
+                  themeMode === mode ? 'bg-surface-2 font-semibold text-foreground' : 'text-muted hover:bg-surface-2 hover:text-foreground',
+                )}
                 type="button"
                 role="menuitemradio"
                 aria-checked={themeMode === mode}
@@ -72,7 +76,7 @@ export default function ThemeToggle() {
                   setOpen(false);
                 }}
               >
-                <Icon className="icon-sm" />
+                <Icon className="size-4" />
                 {label}
               </button>
             ))}

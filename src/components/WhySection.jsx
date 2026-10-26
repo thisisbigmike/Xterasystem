@@ -1,120 +1,74 @@
 'use client';
 
-import { Layers, Clock, BadgeCheck, Globe, Search, Check } from 'lucide-react';
-import SectionHead from './SectionHead';
+import { Layers, Clock, BadgeCheck, Globe, Search } from 'lucide-react';
+import { Section, SectionHeader } from './ui/section';
+import { SkeletonImage } from './Skeleton';
 import FadeIn, { StaggerContainer, StaggerItem } from './FadeIn';
 import { stagger } from '@/lib/motion';
 
 const features = [
-  {
-    Icon: Layers,
-    title: 'Structure first',
-    body: 'Every listing leads with how it works: legal structure, economic model, liquidity, and risks.',
-  },
-  {
-    Icon: Clock,
-    title: 'No verification to browse',
-    body: 'Browse, compare, and learn before completing ID verification.',
-  },
-  {
-    Icon: BadgeCheck,
-    title: 'Clear eligibility tags',
-    body: 'Retail and accredited or qualified opportunities are tagged on the listing.',
-  },
-  {
-    Icon: Globe,
-    title: 'One account, every region',
-    body: 'Availability varies by jurisdiction, but you sign in to a single account.',
-  },
+  { Icon: Layers, title: 'Structure-first, not hype-first', body: 'We lead with how it works: legal structure, economic model, liquidity, and risks.' },
+  { Icon: Clock, title: 'No mandatory friction upfront', body: 'Browse, compare, and learn before completing ID verification.' },
+  { Icon: BadgeCheck, title: 'Clear eligibility tags', body: 'Retail vs. accredited/qualified opportunities clearly tagged upfront.' },
+  { Icon: Globe, title: 'One account to explore globally', body: 'Availability varies by jurisdiction, but your account remains unified.' },
 ];
-
-const disclosures = [
-  'Key terms and offering memorandum',
-  'Structural and market risks',
-  'Compliance disclosures and fees',
-];
-
-const riskRows = [
-  ['Capital at risk', 'Yes'],
-  ['Liquidity', 'Quarterly window'],
-  ['Leverage', 'None'],
-];
-
-const RISK_LEVEL = 3;
 
 export default function WhySection() {
   return (
-    <section className="section section-alt" id="why">
-      <div className="wrap">
-        <SectionHead eyebrow="Why Xterasystem" title="Built for transparency and clarity" />
+    <Section id="why">
+      <SectionHeader eyebrow="Why Xterasystem" title="Built for transparency & clarity" />
 
-        <StaggerContainer as="ul" className="feature-grid" staggerChildren={stagger.grid}>
-          {features.map(({ Icon, title, body }) => (
-            <StaggerItem as="li" key={title} className="card feature-card">
-              <span className="icon-badge" aria-hidden="true">
-                <Icon className="icon-md" />
-              </span>
-              <div>
-                <h3>{title}</h3>
-                <p>{body}</p>
-              </div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
-
-        <FadeIn>
-          <div className="card diligence">
+      <StaggerContainer
+        as="ul"
+        staggerChildren={stagger.grid}
+        className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4"
+      >
+        {features.map(({ Icon, title, body }) => (
+          <StaggerItem as="li" key={title} className="flex flex-col gap-5 bg-surface p-6 sm:p-8">
+            <span className="flex size-10 items-center justify-center rounded-sm bg-accent-soft text-accent">
+              <Icon aria-hidden="true" className="size-5" />
+            </span>
             <div>
-              <div className="diligence-title">
-                <span className="icon-badge" aria-hidden="true">
-                  <Search className="icon-md" />
-                </span>
-                <h3>Diligence on the listing itself</h3>
-              </div>
-              <p>
-                The details that matter appear on the opportunity page, not in footnotes or behind a paywall.
-              </p>
-              <ul className="check-list">
-                {disclosures.map((d) => (
-                  <li key={d}>
-                    <Check className="icon-sm" />
-                    {d}
-                  </li>
-                ))}
-              </ul>
+              <h3 className="text-lg font-semibold">{title}</h3>
+              <p className="mt-2 text-sm text-muted">{body}</p>
             </div>
+          </StaggerItem>
+        ))}
+      </StaggerContainer>
 
-            <div className="mock">
-              <div className="mock-body">
-                <div className="mock-title">
-                  <h4>Risk profile</h4>
-                  <span className="tag">Fund</span>
-                </div>
-                <div
-                  className="risk-meter"
-                  role="meter"
-                  aria-label="Risk level"
-                  aria-valuemin={1}
-                  aria-valuemax={5}
-                  aria-valuenow={RISK_LEVEL}
-                >
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <span key={n} className={n <= RISK_LEVEL ? 'is-filled' : undefined} />
-                  ))}
-                </div>
-                <div className="risk-label">Moderate · {RISK_LEVEL} of 5</div>
-                {riskRows.map(([label, value]) => (
-                  <div className="kv-row" key={label}>
-                    <span>{label}</span>
-                    <span>{value}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mock-foot">Rooftop Solar Fund II. Illustrative only.</div>
+      <FadeIn>
+        <div className="mt-6 grid overflow-hidden rounded-xl border border-border bg-surface md:grid-cols-2">
+          <div className="flex flex-col items-start justify-center gap-5 p-6 sm:p-10">
+            <div className="flex items-center gap-3">
+              <span className="flex size-10 items-center justify-center rounded-sm bg-accent-soft text-accent">
+                <Search aria-hidden="true" className="size-5" />
+              </span>
+              <h3 className="text-xl font-semibold">Diligence-first presentation</h3>
             </div>
+            <p className="text-muted">
+              Key terms, offering memorandums, structural risks, and compliance disclosures are surfaced upfront, not
+              buried in footnotes or hidden behind paywalls.
+            </p>
+            <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent-soft px-3.5 py-1.5 text-sm font-medium text-accent">
+              <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
+              Risk Indicator: Clear &amp; Moderate Categorization
+            </span>
           </div>
-        </FadeIn>
-      </div>
-    </section>
+
+          <SkeletonImage
+            className="min-h-64 border-t border-border md:border-t-0 md:border-l"
+            src="/images/img-business-plans.jpg"
+            alt="Business plans and financial documents on a desk"
+            fill
+            sizes="(max-width: 768px) 100vw, 600px"
+          >
+            <span className="on-dark absolute inset-0 flex flex-col justify-end gap-1 bg-(image:--media-scrim) p-6">
+              <span className="font-display text-lg font-semibold text-foreground">Institutional Due Diligence &amp; Financial Plans</span>
+              <span className="text-sm text-muted">Audited financial charts, risk matrices, and legal structure documentation.</span>
+            </span>
+          </SkeletonImage>
+        </div>
+      </FadeIn>
+    </Section>
   );
 }

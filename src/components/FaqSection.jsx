@@ -1,60 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus } from 'lucide-react';
 import { faqs } from '@/data/faqs';
-import SectionHead from './SectionHead';
-import { StaggerContainer, StaggerItem } from './FadeIn';
-import { stagger, transition } from '@/lib/motion';
+import { Section, SectionHeader } from './ui/section';
+import { Accordion } from './ui/accordion';
+import FadeIn from './FadeIn';
 
 export default function FaqSection() {
-  const [openIdx, setOpenIdx] = useState(null);
-
   return (
-    <section className="section" id="faq">
-      <div className="wrap">
-        <SectionHead eyebrow="FAQ" title="Common questions" />
-
-        <StaggerContainer className="faq-list" staggerChildren={stagger.list}>
-          {faqs.map((f, i) => {
-            const isOpen = openIdx === i;
-            return (
-              <StaggerItem key={f.q} className="faq-item">
-                <h3>
-                  <button
-                    id={`faq-q-${i}`}
-                    className="faq-q"
-                    type="button"
-                    aria-expanded={isOpen}
-                    aria-controls={`faq-a-${i}`}
-                    onClick={() => setOpenIdx(isOpen ? null : i)}
-                  >
-                    {f.q}
-                    <Plus className="icon-sm" />
-                  </button>
-                </h3>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      id={`faq-a-${i}`}
-                      className="faq-a"
-                      role="region"
-                      aria-labelledby={`faq-q-${i}`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={transition.base}
-                    >
-                      <p>{f.a}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
+    <Section id="faq">
+      <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-4">
+          <SectionHeader eyebrow="FAQ" title="Common questions" className="lg:sticky lg:top-24" />
+        </div>
+        <FadeIn className="lg:col-span-8">
+          <Accordion items={faqs.map((f) => ({ title: f.q, content: f.a }))} />
+        </FadeIn>
       </div>
-    </section>
+    </Section>
   );
 }

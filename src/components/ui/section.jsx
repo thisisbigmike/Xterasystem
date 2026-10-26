@@ -14,7 +14,7 @@ export function Section({ id, className, frameClassName, children, ...props }) {
 export function SectionHeader({ eyebrow, title, children, note, align = 'left', className }) {
   return (
     <FadeIn className={cn('mb-12 max-w-2xl', align === 'center' && 'mx-auto text-center', className)}>
-      {eyebrow && <p className="eyebrow">{eyebrow}</p>}
+      {eyebrow && <p className="eyebrow text-accent">{eyebrow}</p>}
       <h2 className="mt-4 text-2xl font-semibold">{title}</h2>
       {children && <p className="mt-4 text-muted">{children}</p>}
       {note && (
