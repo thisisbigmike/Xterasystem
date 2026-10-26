@@ -1,19 +1,23 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
+import { MotionConfig } from 'framer-motion';
+import { THEME_STORAGE_KEY, DEFAULT_THEME_MODE } from '@/lib/theme';
 
 const ThemeContext = createContext({
-  themeMode: 'light',
+  themeMode: DEFAULT_THEME_MODE,
   setThemeMode: () => {},
 });
 
 export function ThemeProvider({ children }) {
-  const [themeMode, setThemeModeState] = useState('light');
+  const [themeMode, setThemeModeState] = useState(DEFAULT_THEME_MODE);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('xtera_theme_mode') || 'light';
-    setThemeModeState(saved);
+    try {
+      const saved = localStorage.getItem(THEME_STORAGE_KEY);
+      if (saved) setThemeModeState(saved);
+    } catch {}
     setMounted(true);
   }, []);
 
@@ -28,7 +32,9 @@ export function ThemeProvider({ children }) {
     }
 
     updateThemeUI(themeMode);
-    localStorage.setItem('xtera_theme_mode', themeMode);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, themeMode);
+    } catch {}
 
     const handleSystemChange = () => {
       if (themeMode === 'system') {
@@ -46,7 +52,10 @@ export function ThemeProvider({ children }) {
 
   return (
     <ThemeContext.Provider value={{ themeMode, setThemeMode, mounted }}>
-      {children}
+      {/* Honors the OS "reduce motion" setting for every framer-motion animation. */}
+      <MotionConfig reducedMotion="user">
+        {children}
+      </MotionConfig>
     </ThemeContext.Provider>
   );
 }

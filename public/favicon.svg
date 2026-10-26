@@ -1,10 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>circle{fill:#087A5E}@media (prefers-color-scheme:dark){circle{fill:#34D3A6}}</style>
   <mask id="m">
-    <circle cx="50" cy="50" r="46" fill="white"/>
+    <circle cx="50" cy="50" r="46" style="fill:#fff"/>
     <path d="M0 16Q50 24 100 16L100 23Q50 31 0 23Z" fill="black"/>
     <path d="M0 35Q50 43 100 35L100 42Q50 50 0 42Z" fill="black"/>
     <path d="M0 54Q50 62 100 54L100 61Q50 69 0 61Z" fill="black"/>
     <path d="M0 73Q50 81 100 73L100 80Q50 88 0 80Z" fill="black"/>
   </mask>
-  <circle cx="50" cy="50" r="46" fill="#1DB954" mask="url(#m)"/>
+  <circle cx="50" cy="50" r="46" mask="url(#m)"/>
 </svg>

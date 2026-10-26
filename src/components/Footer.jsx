@@ -1,256 +1,110 @@
 'use client';
 
-import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 import GlobeLogo from './GlobeLogo';
-import FadeIn from './FadeIn';
+import { navLinks } from '@/data/site';
 
-export default function Footer() {
-  const socialLinks = [
-    {
-      name: 'Instagram',
-      label: 'Instagram',
-      href: '#',
-      svg: (
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-        </svg>
-      ),
-    },
-    {
-      name: 'Twitter',
-      label: 'Twitter',
-      href: '#',
-      svg: (
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-        </svg>
-      ),
-    },
-    {
-      name: 'LinkedIn',
-      label: 'LinkedIn',
-      href: '#',
-      svg: (
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-          <rect x="2" y="9" width="4" height="12" />
-          <circle cx="4" cy="4" r="2" />
-        </svg>
-      ),
-    },
-    {
-      name: 'GitHub',
-      label: 'GitHub',
-      href: '#',
-      svg: (
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-          <path d="M9 18c-4.51 2-5-2-7-2" />
-        </svg>
-      ),
-    },
-  ];
+function SubscribeForm() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle'); // idle | submitting | success | error
+  const [message, setMessage] = useState('');
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    setStatus('submitting');
+    setMessage('');
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Something went wrong. Try again.');
+      setStatus('success');
+      setMessage("Thanks. You're on the list.");
+      setEmail('');
+    } catch (err) {
+      setStatus('error');
+      setMessage(err.message);
+    }
+  }
+
+  const submitting = status === 'submitting';
 
   return (
-    <footer style={{ borderTop: '1px solid var(--border)', backgroundColor: 'var(--bg)', paddingTop: '60px', paddingBottom: '40px' }}>
+    <form onSubmit={onSubmit} noValidate>
+      <div className="subscribe-form">
+        <label htmlFor="subscribe-email" className="sr-only">Email address</label>
+        <input
+          id="subscribe-email"
+          className="input"
+          type="email"
+          autoComplete="email"
+          placeholder="you@example.com"
+          required
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            if (status === 'error') setStatus('idle');
+          }}
+          aria-invalid={status === 'error'}
+          aria-describedby="subscribe-status"
+          disabled={submitting}
+        />
+        <button className="btn btn-primary" type="submit" disabled={submitting} aria-busy={submitting}>
+          {submitting && <span className="spinner" aria-hidden="true" />}
+          {submitting ? 'Subscribing' : 'Subscribe'}
+        </button>
+      </div>
+      <p
+        id="subscribe-status"
+        className={`form-status${status === 'error' ? ' is-error' : ''}${status === 'success' ? ' is-success' : ''}`}
+        role="status"
+      >
+        {message}
+      </p>
+    </form>
+  );
+}
+
+export default function Footer() {
+  return (
+    <footer className="site-footer">
       <div className="wrap">
-        <FadeIn>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-              gap: '40px',
-              paddingBottom: '48px',
-              alignItems: 'start',
-            }}
-          >
-            {/* Column 1: Xterasystem Brand & Socials */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start', textAlign: 'left' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', color: 'var(--fg)', cursor: 'default' }}>
-                <GlobeLogo maskId="footer-globe-mask" />
-                <span style={{ fontSize: '20px', fontWeight: '700', fontFamily: 'var(--display)', letterSpacing: '-0.02em' }}>
-                  Xterasystem
-                </span>
-              </div>
-              <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.6', margin: 0, maxWidth: '280px', textAlign: 'left' }}>
-                Empowering institutions and accredited investors to access curated real assets, private credit, and alternative markets with institutional governance.
-              </p>
-              {/* Animated Social Icon Buttons */}
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '8px' }}>
-                {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    aria-label={social.label}
-                    className="social-link"
-                    whileHover={{
-                      y: -5,
-                      scale: 1.18,
-                      rotate: 4,
-                      backgroundColor: 'rgba(30, 215, 96, 0.15)',
-                      color: 'var(--green)',
-                    }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{ type: 'spring', stiffness: 450, damping: 15 }}
-                    style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'var(--muted)',
-                      textDecoration: 'none',
-                      backgroundColor: 'var(--bg-elevated)',
-                      border: '1px solid var(--border)',
-                      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
-                    }}
-                  >
-                    {social.svg}
-                  </motion.a>
-                ))}
-              </div>
-            </div>
-
-            {/* Column 2: Company & Investment Universe */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', alignItems: 'flex-start', textAlign: 'left' }}>
-              <div style={{ width: '100%', textAlign: 'left' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)', textAlign: 'left' }}>Company</h4>
-                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', textAlign: 'left', paddingLeft: 0 }}>
-                  <a href="#about" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>About Xterasystem</a>
-                  <a href="#structures" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Legal Architecture</a>
-                  <a href="#team" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Custodial Partners</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Institutional Governance</a>
-                </nav>
-              </div>
-              <div style={{ width: '100%', textAlign: 'left' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)', textAlign: 'left' }}>Investment Universe</h4>
-                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', textAlign: 'left', paddingLeft: 0 }}>
-                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Real Estate &amp; Infrastructure</a>
-                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Private Equity &amp; Credit</a>
-                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Renewable Energy</a>
-                  <a href="#universe" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Venture Capital</a>
-                </nav>
-              </div>
-            </div>
-
-            {/* Column 3: Resources & Legal */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', alignItems: 'flex-start', textAlign: 'left' }}>
-              <div style={{ width: '100%', textAlign: 'left' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)', textAlign: 'left' }}>Resources</h4>
-                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', textAlign: 'left', paddingLeft: 0 }}>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Market Insights</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Due Diligence Framework</a>
-                  <a href="#faq" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Investor FAQ</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Asset Class Guides</a>
-                </nav>
-              </div>
-              <div style={{ width: '100%', textAlign: 'left' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '14px', color: 'var(--fg)', textAlign: 'left' }}>Legal &amp; Compliance</h4>
-                <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start', textAlign: 'left', paddingLeft: 0 }}>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Privacy Policy</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Terms of Service</a>
-                  <a href="#" style={{ fontSize: '14px', color: 'var(--muted)', textDecoration: 'none', textAlign: 'left' }}>Risk Disclosures</a>
-                </nav>
-              </div>
-            </div>
-
-            {/* Column 4: Newsletter Subscription Form (Side-by-Side Row Layout as in Image 1) */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'flex-start', textAlign: 'left' }}>
-              <h4 style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: 'var(--fg)', textAlign: 'left' }}>Subscribe to market intelligence</h4>
-              <p style={{ fontSize: '14px', color: 'var(--muted)', lineHeight: '1.5', margin: 0, maxWidth: '320px', textAlign: 'left' }}>
-                Stay updated with Xterasystem alternative asset opportunities, market insights, and institutional deal reports.
-              </p>
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: '10px',
-                  marginTop: '8px',
-                  width: '100%',
-                  maxWidth: '340px',
-                }}
-              >
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  style={{
-                    flex: '1',
-                    minWidth: '0',
-                    padding: '10px 18px',
-                    borderRadius: '9999px',
-                    border: '1px solid var(--border-strong)',
-                    backgroundColor: 'var(--bg)',
-                    color: 'var(--fg)',
-                    fontSize: '14px',
-                    outline: 'none',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-                  }}
-                />
-                <motion.button
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-                  type="submit"
-                  style={{
-                    flexShrink: 0,
-                    padding: '10px 22px',
-                    borderRadius: '9999px',
-                    backgroundColor: '#111827',
-                    color: '#ffffff',
-                    fontWeight: '600',
-                    fontSize: '14px',
-                    border: 'none',
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
-                  }}
-                >
-                  Subscribe
-                </motion.button>
-              </form>
-            </div>
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <a className="logo" href="#top" aria-label="Xterasystem home">
+              <GlobeLogo maskId="footer-globe-mask" />
+              Xterasystem
+            </a>
+            <p>
+              A marketplace for real assets and private markets. Every listing shows its structure, risks, and
+              eligibility before you invest.
+            </p>
           </div>
 
-          <p
-            style={{
-              fontSize: '12px',
-              color: 'var(--muted)',
-              lineHeight: '1.6',
-              marginBottom: '24px',
-              opacity: 0.8,
-              textAlign: 'left',
-            }}
-          >
-            Investing in alternative assets involves risk, including possible loss of principal. Past performance is no guarantee of future results. Offerings are available only to qualified investors in eligible jurisdictions.
-          </p>
-
-          <div
-            style={{
-              borderTop: '1px solid var(--border)',
-              paddingTop: '24px',
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              gap: '16px',
-              fontSize: '13px',
-              color: 'var(--muted)',
-            }}
-          >
-            <p style={{ margin: 0 }}>&copy; {new Date().getFullYear()} Xterasystem Inc. All rights reserved.</p>
-            <div style={{ display: 'flex', gap: '20px' }}>
-              <a href="#" style={{ color: 'var(--muted)', textDecoration: 'none' }}>Privacy Policy</a>
-              <a href="#" style={{ color: 'var(--muted)', textDecoration: 'none' }}>Terms of Service</a>
-              <a href="#" style={{ color: 'var(--muted)', textDecoration: 'none' }}>Risk Disclosure</a>
+          <nav aria-label="Footer">
+            <h2 className="footer-heading">Platform</h2>
+            <div className="footer-links">
+              {navLinks.map((link) => (
+                <a key={link.href} className="link" href={link.href}>{link.label}</a>
+              ))}
             </div>
+          </nav>
+
+          <div className="footer-newsletter">
+            <h2 className="footer-heading">Market updates</h2>
+            <p>New listings and asset-class research by email. Unsubscribe anytime.</p>
+            <SubscribeForm />
           </div>
-        </FadeIn>
+        </div>
+
+        <p className="disclaimer">
+          Investing in alternative assets involves risk, including possible loss of principal. Past performance is no
+          guarantee of future results. Offerings are available only to qualified investors in eligible jurisdictions.
+        </p>
+        <p className="footer-bottom">&copy; {new Date().getFullYear()} Xterasystem Inc. All rights reserved.</p>
       </div>
     </footer>
   );

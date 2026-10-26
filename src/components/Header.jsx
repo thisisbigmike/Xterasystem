@@ -1,111 +1,76 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 import GlobeLogo from './GlobeLogo';
 import ThemeToggle from './ThemeToggle';
-import { springBounce } from './FadeIn';
+import { SIGNUP_URL, navLinks } from '@/data/site';
 
 export default function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
-    if (drawerOpen) {
-      document.body.classList.add('menu-open');
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.classList.remove('menu-open');
-      document.body.style.overflow = '';
-    }
+    document.body.style.overflow = drawerOpen ? 'hidden' : '';
+    if (!drawerOpen) return;
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setDrawerOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
   }, [drawerOpen]);
 
   const closeDrawer = () => setDrawerOpen(false);
 
   return (
     <>
-      <div
-        className={`nav-backdrop ${drawerOpen ? 'active' : ''}`}
-        id="navBackdrop"
-        onClick={closeDrawer}
-      />
+      <div className={`nav-backdrop${drawerOpen ? ' is-open' : ''}`} onClick={closeDrawer} aria-hidden="true" />
 
-      <header>
+      <header className={`site-header${drawerOpen ? ' is-menu-open' : ''}`}>
         <div className="wrap">
-          <nav>
-            <motion.div
-              className="logo"
-              whileHover={{ scale: 1.03 }}
-              transition={springBounce}
-            >
+          <nav className="nav" aria-label="Main">
+            <a className="logo" href="#top" aria-label="Xterasystem home">
               <GlobeLogo maskId="header-globe-mask" />
               Xterasystem
-            </motion.div>
+            </a>
 
-            <div className={`nav-links ${drawerOpen ? 'active' : ''}`} id="navLinks">
+            <div className={`nav-links${drawerOpen ? ' is-open' : ''}`} id="nav-links">
               <div className="nav-drawer-head">
-                <div className="logo">
+                <span className="logo">
                   <GlobeLogo maskId="drawer-globe-mask" />
                   Menu
-                </div>
-                <motion.button
-                  className="nav-drawer-close"
-                  id="navDrawerClose"
-                  aria-label="Close navigation menu"
-                  type="button"
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.9 }}
-                  transition={springBounce}
-                  onClick={closeDrawer}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                    <path d="M18 6L6 18M6 6l12 12" />
-                  </svg>
-                </motion.button>
+                </span>
+                <button className="icon-btn" type="button" aria-label="Close menu" onClick={closeDrawer}>
+                  <X className="icon-sm" />
+                </button>
               </div>
-              <a href="#how" onClick={closeDrawer}>How it works</a>
-              <a href="#universe" onClick={closeDrawer}>Investment universe</a>
-              <a href="#trust-eligibility" onClick={closeDrawer}>Trust &amp; eligibility</a>
-              <a href="#faq" onClick={closeDrawer}>FAQ</a>
+              {navLinks.map((link) => (
+                <a key={link.href} className="link" href={link.href} onClick={closeDrawer}>
+                  {link.label}
+                </a>
+              ))}
               <div className="nav-mobile-cta">
-                <motion.a
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="btn btn-primary"
-                  href="#"
-                  onClick={closeDrawer}
-                >
-                  Create Account
-                </motion.a>
+                <a className="btn btn-primary" href={SIGNUP_URL} onClick={closeDrawer}>
+                  Create account
+                </a>
               </div>
             </div>
 
-            <div className="nav-cta">
+            <div className="nav-actions">
               <ThemeToggle />
-              <motion.button
-                className="nav-toggle"
-                id="navToggle"
-                aria-label="Toggle navigation menu"
-                aria-expanded={drawerOpen ? 'true' : 'false'}
-                aria-controls="navLinks"
-                aria-haspopup="true"
+              <button
+                className="icon-btn nav-toggle"
                 type="button"
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.92 }}
-                transition={springBounce}
-                onClick={() => setDrawerOpen((prev) => !prev)}
+                aria-label="Open menu"
+                aria-expanded={drawerOpen}
+                aria-controls="nav-links"
+                onClick={() => setDrawerOpen(true)}
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </motion.button>
-              <motion.a
-                whileHover={{ scale: 1.04, y: -1 }}
-                whileTap={{ scale: 0.96 }}
-                className="btn btn-primary btn-sm nav-btn-desktop"
-                href="#"
-              >
-                Create Account
-              </motion.a>
+                <Menu className="icon-sm" />
+              </button>
+              <a className="btn btn-primary btn-sm nav-cta-desktop" href={SIGNUP_URL}>
+                Create account
+              </a>
             </div>
           </nav>
         </div>

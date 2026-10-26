@@ -1,80 +1,32 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import FadeIn, { StaggerContainer, StaggerItem } from './FadeIn';
+import SectionHead from './SectionHead';
+import { StaggerContainer, StaggerItem } from './FadeIn';
+import { stagger } from '@/lib/motion';
+
+const structures = [
+  { tag: 'Direct asset', title: 'Direct ownership', body: 'Title, equity, or a direct fractional interest in physical or corporate assets.' },
+  { tag: 'Fund / SPV', title: 'Fund or pooled vehicle', body: 'An interest in a managed fund or special-purpose vehicle that holds the underlying assets.' },
+  { tag: 'Debt', title: 'Lending and credit', body: 'Fixed or variable income through loans, bonds, or structured debt instruments.' },
+  { tag: 'Cash flow', title: 'Revenue-share', body: 'A contractual share of gross or net revenue from an operating business or asset.' },
+];
 
 export default function StructuresSection() {
   return (
-    <section>
+    <section className="section" id="structures">
       <div className="wrap">
-        <FadeIn>
-          <div className="section-head">
-            <div className="eyebrow">Clear legal &amp; economic structures</div>
-            <h2>Know what you own before you commit</h2>
-            <p>Every opportunity on Xterasystem is categorized by its underlying structure. No guessing.</p>
-          </div>
-        </FadeIn>
+        <SectionHead eyebrow="Legal and economic structures" title="Know what you own before you commit">
+          Every opportunity on Xterasystem is categorized by its underlying structure, so you never have to guess.
+        </SectionHead>
 
-        <FadeIn delay={0.1}>
-          <div className="structure-banner">
-            <div className="sb-node"><i></i>Direct ownership</div>
-            <div className="sb-line"></div>
-            <div className="sb-node"><i></i>Fund / SPV</div>
-            <div className="sb-line"></div>
-            <div className="sb-node"><i></i>Lending / Debt</div>
-            <div className="sb-line"></div>
-            <div className="sb-node"><i></i>Revenue-share</div>
-          </div>
-        </FadeIn>
-
-        <StaggerContainer className="structure-grid" staggerChildren={0.1}>
-          <StaggerItem>
-            <motion.div
-              className="structure-card"
-              whileHover={{ y: -4, borderColor: 'var(--green)' }}
-              transition={{ duration: 0.2 }}
-            >
-              <span className="tag">Direct Asset</span>
-              <h4>Direct Ownership</h4>
-              <p>Title, equity, or direct fractional interest in physical or corporate assets.</p>
-            </motion.div>
-          </StaggerItem>
-
-          <StaggerItem>
-            <motion.div
-              className="structure-card"
-              whileHover={{ y: -4, borderColor: 'var(--green)' }}
-              transition={{ duration: 0.2 }}
-            >
-              <span className="tag">Fund / SPV</span>
-              <h4>Fund / Pooled</h4>
-              <p>Interest in a managed fund or special-purpose vehicle holding underlying assets.</p>
-            </motion.div>
-          </StaggerItem>
-
-          <StaggerItem>
-            <motion.div
-              className="structure-card"
-              whileHover={{ y: -4, borderColor: 'var(--green)' }}
-              transition={{ duration: 0.2 }}
-            >
-              <span className="tag">Debt</span>
-              <h4>Lending / Credit</h4>
-              <p>Fixed or variable income through loans, bonds, or structured debt instruments.</p>
-            </motion.div>
-          </StaggerItem>
-
-          <StaggerItem>
-            <motion.div
-              className="structure-card"
-              whileHover={{ y: -4, borderColor: 'var(--green)' }}
-              transition={{ duration: 0.2 }}
-            >
-              <span className="tag">Cash flow</span>
-              <h4>Revenue-Share</h4>
-              <p>Entitlement to a percentage of gross or net revenue from operations.</p>
-            </motion.div>
-          </StaggerItem>
+        <StaggerContainer as="ul" className="structure-grid" staggerChildren={stagger.grid}>
+          {structures.map((s) => (
+            <StaggerItem as="li" key={s.title} className="card structure-card">
+              <span className="tag">{s.tag}</span>
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </StaggerItem>
+          ))}
         </StaggerContainer>
       </div>
     </section>

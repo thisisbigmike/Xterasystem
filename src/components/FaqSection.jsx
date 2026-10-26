@@ -2,58 +2,51 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Plus } from 'lucide-react';
 import { faqs } from '@/data/faqs';
-import FadeIn, { StaggerContainer, StaggerItem } from './FadeIn';
+import SectionHead from './SectionHead';
+import { StaggerContainer, StaggerItem } from './FadeIn';
+import { stagger, transition } from '@/lib/motion';
 
 export default function FaqSection() {
   const [openIdx, setOpenIdx] = useState(null);
 
-  const toggleFaq = (idx) => {
-    setOpenIdx((prev) => (prev === idx ? null : idx));
-  };
-
   return (
-    <section id="faq">
+    <section className="section" id="faq">
       <div className="wrap">
-        <FadeIn>
-          <div className="section-head">
-            <div className="eyebrow">FAQ</div>
-            <h2>Common questions</h2>
-          </div>
-        </FadeIn>
+        <SectionHead eyebrow="FAQ" title="Common questions" />
 
-        <StaggerContainer id="faqList" staggerChildren={0.06}>
+        <StaggerContainer className="faq-list" staggerChildren={stagger.list}>
           {faqs.map((f, i) => {
             const isOpen = openIdx === i;
             return (
-              <StaggerItem key={f.q} className={`faq-item ${isOpen ? 'open' : ''}`}>
-                <button
-                  className="faq-q"
-                  onClick={() => toggleFaq(i)}
-                  type="button"
-                >
-                  {f.q}
-                  <motion.span
-                    className="plus"
-                    animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.2 }}
+              <StaggerItem key={f.q} className="faq-item">
+                <h3>
+                  <button
+                    id={`faq-q-${i}`}
+                    className="faq-q"
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-a-${i}`}
+                    onClick={() => setOpenIdx(isOpen ? null : i)}
                   >
-                    +
-                  </motion.span>
-                </button>
+                    {f.q}
+                    <Plus className="icon-sm" />
+                  </button>
+                </h3>
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
-                      key="content"
+                      id={`faq-a-${i}`}
+                      className="faq-a"
+                      role="region"
+                      aria-labelledby={`faq-q-${i}`}
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-                      style={{ overflow: 'hidden' }}
+                      transition={transition.base}
                     >
-                      <div className="faq-a-inner" style={{ padding: '0 4px 20px', color: 'var(--text-muted)', fontSize: '14px' }}>
-                        {f.a}
-                      </div>
+                      <p>{f.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>

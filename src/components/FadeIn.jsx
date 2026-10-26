@@ -1,96 +1,67 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { revealOffset, stagger, transition } from '@/lib/motion';
 
-// Kinetics-inspired spring physics preset
-export const springPhysics = {
-  type: 'spring',
-  stiffness: 320,
-  damping: 24,
-  mass: 1,
+const offsets = {
+  up: { y: revealOffset },
+  down: { y: -revealOffset },
+  none: {},
 };
 
-export const springBounce = {
-  type: 'spring',
-  stiffness: 400,
-  damping: 18,
-};
+const viewport = { once: true, margin: '-64px' };
 
-export default function FadeIn({
-  children,
-  delay = 0,
-  direction = 'up',
-  duration,
-  className = '',
-  style = {},
-}) {
-  const directions = {
-    up: { y: 35, x: 0 },
-    down: { y: -35, x: 0 },
-    left: { x: 35, y: 0 },
-    right: { x: -35, y: 0 },
-    none: { x: 0, y: 0 },
-  };
-
-  const initialOffset = directions[direction] || directions.up;
-
+// Reveals a block once as it scrolls into view.
+export default function FadeIn({ children, delay = 0, direction = 'up', className, style, as = 'div' }) {
+  const Component = motion[as];
   return (
-    <motion.div
-      initial={{ opacity: 0, ...initialOffset }}
+    <Component
+      initial={{ opacity: 0, ...(offsets[direction] || offsets.up) }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={
-        duration
-          ? { duration, delay, ease: [0.21, 0.47, 0.32, 0.98] }
-          : { ...springPhysics, delay }
-      }
+      viewport={viewport}
+      transition={{ ...transition.reveal, delay }}
       className={className}
       style={style}
     >
       {children}
-    </motion.div>
+    </Component>
   );
 }
 
-export function StaggerContainer({ children, className = '', style = {}, delayChildren = 0, staggerChildren = 0.08 }) {
+// Reveals its StaggerItem children in sequence.
+export function StaggerContainer({ children, className, style, delayChildren = 0, staggerChildren = stagger.list, as = 'div', ...rest }) {
+  const Component = motion[as];
   return (
-    <motion.div
+    <Component
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-40px' }}
+      viewport={viewport}
       variants={{
-        hidden: { opacity: 0 },
-        visible: {
-          opacity: 1,
-          transition: {
-            delayChildren,
-            staggerChildren,
-          },
-        },
+        hidden: {},
+        visible: { transition: { delayChildren, staggerChildren } },
       }}
       className={className}
       style={style}
+      {...rest}
     >
       {children}
-    </motion.div>
+    </Component>
   );
 }
 
-export function StaggerItem({ children, className = '', style = {} }) {
+export function StaggerItem({ children, className, style, as = 'div', ...rest }) {
+  const Component = motion[as];
   return (
-    <motion.div
+    <Component
       variants={{
-        hidden: { opacity: 0, y: 24 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: springPhysics,
-        },
+        hidden: { opacity: 0, y: revealOffset },
+        visible: { opacity: 1, y: 0, transition: transition.reveal },
       }}
       className={className}
       style={style}
+      {...rest}
     >
       {children}
-    </motion.div>
+    </Component>
   );
 }

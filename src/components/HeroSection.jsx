@@ -1,174 +1,140 @@
 'use client';
 
-import { useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { categories } from '@/data/categories';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ShieldCheck } from 'lucide-react';
+import { SkeletonImage } from './Skeleton';
 import FadeIn, { StaggerContainer, StaggerItem } from './FadeIn';
+import { categories } from '@/data/categories';
+import { SIGNUP_URL } from '@/data/site';
+import { stagger, transition } from '@/lib/motion';
+
+const filters = ['All', 'Direct', 'Fund', 'Lending', 'Revenue-share'];
+
+const sampleListings = [
+  { name: 'Gold', category: 'Precious Metals', structure: 'Direct' },
+  { name: 'Rooftop Solar Fund II', category: 'Energy & Natural Resources', structure: 'Fund' },
+  { name: 'Cocoa', category: 'Agriculture & Food', structure: 'Lending' },
+  { name: 'Residential apartments', category: 'Real Estate & Property', structure: 'Direct' },
+  { name: 'Music royalties', category: 'Media, Entertainment & IP', structure: 'Revenue-share' },
+  { name: 'Cargo trucks', category: 'Transportation & Logistics', structure: 'Lending' },
+];
+
+// Derived from the catalog so the numbers stay true as categories change.
+const stats = [
+  { value: categories.length, label: 'Asset classes' },
+  { value: categories.reduce((n, c) => n + c.items.length, 0), label: 'Asset types' },
+  { value: filters.length - 1, label: 'Legal structures' },
+  { value: 0, label: 'Verification steps to browse' },
+];
 
 export default function HeroSection() {
-  const tickerItems = useMemo(() => {
-    const flat = categories.flatMap(c => c.items.map(it => ({ item: it, cat: c.name, hue: c.hue })));
-
-    const picks = [
-      flat[0], // Gold
-      flat[15], // Cocoa
-      flat[4], // Uranium
-      flat[20], // Residential apartments
-      flat[35], // Cargo trucks
-    ];
-    const tags = ['Direct asset', 'Fund', 'Lending', 'Revenue-share', 'Fund'];
-
-    return picks.map((p, i) => ({
-      ...p,
-      num: String(i + 1).padStart(2, '0'),
-      tag: tags[i % tags.length],
-    }));
-  }, []);
+  const [filter, setFilter] = useState('All');
+  const visible = sampleListings.filter((l) => filter === 'All' || l.structure === filter);
 
   return (
     <section className="hero">
       <div className="wrap">
-        <div className="hero-grid">
-          <div>
-            <FadeIn direction="down" delay={0.1}>
-              <div className="eyebrow">Global · Multi-asset · Verified access</div>
-            </FadeIn>
+        <div className="hero-stage on-dark">
+          <SkeletonImage
+            className="hero-bg"
+            src="/images/cat_energy.png"
+            alt=""
+            fill
+            preload
+            sizes="(max-width: 1180px) 100vw, 1180px"
+          />
 
-            <FadeIn delay={0.2}>
+          <div className="hero-grid">
+            <FadeIn>
+              <span className="badge">
+                <span className="badge-dot" aria-hidden="true" />
+                Real assets · Private markets
+              </span>
               <h1>
-                Get access to global<br />
-                <span className="accent">alternative investments</span>
+                Get access to global <span className="accent">alternative investments</span>
               </h1>
-            </FadeIn>
-
-            <FadeIn delay={0.3}>
-              <p className="subhead">
-                Create an Xterasystem account to explore curated opportunities across real assets and
-                private markets — clearly labeled by structure, risk factors, and eligibility before you commit capital.
+              <p className="hero-lead">
+                Explore curated opportunities across real assets and private markets. Every listing shows its
+                structure, risk factors, and eligibility before you commit capital.
               </p>
-            </FadeIn>
-
-            <StaggerContainer delayChildren={0.4} staggerChildren={0.12} className="hero-bullets">
-              <StaggerItem>
-                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                  <span className="check">
-                    <svg viewBox="0 0 12 12" fill="none">
-                      <path d="M2 6L4.5 8.5L10 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                  Explore real assets, infrastructure, private credit, and more — across regions
-                </li>
-              </StaggerItem>
-              <StaggerItem>
-                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                  <span className="check">
-                    <svg viewBox="0 0 12 12" fill="none">
-                      <path d="M2 6L4.5 8.5L10 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                  Understand the structure upfront — ownership, fund, lending, revenue-share
-                </li>
-              </StaggerItem>
-              <StaggerItem>
-                <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                  <span className="check">
-                    <svg viewBox="0 0 12 12" fill="none">
-                      <path d="M2 6L4.5 8.5L10 3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </span>
-                  Browse first. Verify (KYC) when you&apos;re ready to invest
-                </li>
-              </StaggerItem>
-            </StaggerContainer>
-
-            <FadeIn delay={0.65}>
-              <div className="hero-ctas">
-                <motion.a
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="btn btn-primary"
-                  href="#"
-                >
-                  Create Account
-                </motion.a>
-                <motion.a
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="btn btn-ghost"
-                  href="#how"
-                >
-                  Learn how it works
-                </motion.a>
+              <div className="hero-actions">
+                <a className="btn btn-primary" href={SIGNUP_URL}>Create account</a>
+                <a className="btn btn-secondary" href="#how">How it works</a>
               </div>
-              <p className="hero-micro">
-                Create an account in ~60 seconds. No commitment required. Availability and eligibility
-                vary by jurisdiction and opportunity.
+              <p className="hero-note">
+                Takes about 60 seconds. Availability and eligibility vary by jurisdiction and opportunity.
               </p>
+            </FadeIn>
+
+            <FadeIn delay={0.15} className="hero-visual">
+              <div className="mock">
+                <div className="mock-bar">
+                  <div className="mock-dots" aria-hidden="true"><span /><span /><span /></div>
+                  <span className="mock-url">app.xterasystem.com/opportunities</span>
+                </div>
+                <div className="mock-body">
+                  <div className="filter-row" role="group" aria-label="Filter sample listings by structure">
+                    {filters.map((f) => (
+                      <button
+                        key={f}
+                        type="button"
+                        className="filter-btn"
+                        aria-pressed={filter === f}
+                        onClick={() => setFilter(f)}
+                      >
+                        {f}
+                      </button>
+                    ))}
+                  </div>
+                  <ul className="listing-list" aria-live="polite">
+                    <AnimatePresence initial={false} mode="popLayout">
+                      {visible.map((l) => (
+                        <motion.li
+                          key={l.name}
+                          className="listing"
+                          layout
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={transition.base}
+                        >
+                          <div className="listing-main">
+                            <span className="monogram" aria-hidden="true">{l.category.slice(0, 2).toUpperCase()}</span>
+                            <div className="listing-text">
+                              <div className="listing-name">{l.name}</div>
+                              <div className="listing-cat">{l.category}</div>
+                            </div>
+                          </div>
+                          <span className="tag">{l.structure}</span>
+                        </motion.li>
+                      ))}
+                    </AnimatePresence>
+                  </ul>
+                </div>
+                <div className="mock-foot">Illustrative. Not an offer to invest.</div>
+              </div>
+
+              <div className="float-card">
+                <span className="icon-badge" aria-hidden="true">
+                  <ShieldCheck className="icon-md" />
+                </span>
+                <div>
+                  <strong>KYC only when you invest</strong>
+                  <span>Browse and compare first</span>
+                </div>
+              </div>
             </FadeIn>
           </div>
 
-          <FadeIn direction="left" delay={0.3} duration={0.7}>
-            <div className="device-stack">
-              <motion.div
-                className="browser-mock"
-                whileHover={{ y: -4, boxShadow: '0 50px 80px -30px rgba(0,0,0,0.8)' }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="browser-topbar">
-                  <div className="browser-dots"><span></span><span></span><span></span></div>
-                  <span className="browser-url">app.xterasystem.com/opportunities</span>
-                </div>
-                <div className="browser-body">
-                  <div className="ticker-card-head">
-                    <span>Browsing now</span>
-                    <div className="pulse-dot"><i></i>Live universe</div>
-                  </div>
-                  <div id="tickerList">
-                    {tickerItems.map((p, idx) => (
-                      <motion.div
-                        className="row-item"
-                        key={p.item}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5 + idx * 0.1 }}
-                      >
-                        <div className="row-left">
-                          <span className="row-num">{p.num}</span>
-                          <span className="row-swatch" style={{ background: p.hue }} />
-                          <div>
-                            <div className="row-name">{p.item}</div>
-                            <div className="row-sub">{p.cat}</div>
-                          </div>
-                        </div>
-                        <span className="row-tag">{p.tag}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                className="phone-mock"
-                animate={{ y: [0, -7, 0] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  repeatType: 'reverse',
-                  ease: 'easeInOut',
-                }}
-              >
-                <div className="phone-notch"></div>
-                <div className="phone-screen">
-                  <div className="phone-label">Opportunity</div>
-                  <div className="phone-title">Rooftop Solar Fund II</div>
-                  <div className="phone-row"><span>Structure</span><span>Fund</span></div>
-                  <div className="phone-row"><span>Target return</span><span>12.4% p.a.</span></div>
-                  <div className="phone-row"><span>Min. invest</span><span>$500</span></div>
-                  <div className="phone-cta">View details</div>
-                </div>
-              </motion.div>
-            </div>
-          </FadeIn>
+          <StaggerContainer as="dl" className="hero-stats" delayChildren={0.2} staggerChildren={stagger.list}>
+            {stats.map((s) => (
+              <StaggerItem key={s.label} className="hero-stat">
+                <dt>{s.label}</dt>
+                <dd>{s.value}</dd>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
       </div>
     </section>

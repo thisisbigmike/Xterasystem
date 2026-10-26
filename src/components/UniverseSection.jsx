@@ -1,208 +1,133 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { categories } from '@/data/categories';
-import FadeIn, { StaggerContainer, StaggerItem, springBounce } from './FadeIn';
+import SectionHead from './SectionHead';
+import { SkeletonImage } from './Skeleton';
+import FadeIn, { StaggerContainer, StaggerItem } from './FadeIn';
+import { stagger, transition } from '@/lib/motion';
+
+const featured = categories
+  .map((cat, index) => ({ ...cat, index }))
+  .filter((cat) => cat.image);
 
 export default function UniverseSection() {
   const [selectedIdx, setSelectedIdx] = useState(0);
+  const tabRefs = useRef([]);
+  const panelRef = useRef(null);
+  const selected = categories[selectedIdx];
 
-  const selectedCat = categories[selectedIdx];
+  const selectFromFeatured = (index) => {
+    setSelectedIdx(index);
+    panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
 
-  const featuredNames = ["Real Estate & Property", "Energy & Natural Resources", "Agriculture & Food", "Technology & Digital Infra"];
-  const featuredCats = featuredNames.map(name => categories.find(c => c.name === name)).filter(Boolean);
+  // Roving focus per the WAI-ARIA tabs pattern.
+  const onTabKeyDown = (e) => {
+    const last = categories.length - 1;
+    const moves = {
+      ArrowRight: selectedIdx === last ? 0 : selectedIdx + 1,
+      ArrowDown: selectedIdx === last ? 0 : selectedIdx + 1,
+      ArrowLeft: selectedIdx === 0 ? last : selectedIdx - 1,
+      ArrowUp: selectedIdx === 0 ? last : selectedIdx - 1,
+      Home: 0,
+      End: last,
+    };
+    if (!(e.key in moves)) return;
+    e.preventDefault();
+    setSelectedIdx(moves[e.key]);
+    tabRefs.current[moves[e.key]]?.focus();
+  };
 
   return (
-    <section id="universe">
+    <section className="section" id="universe">
       <div className="wrap">
-        <FadeIn>
-          <div className="section-head">
-            <div className="eyebrow">Investment universe</div>
-            <h2>A broad universe, organized for clarity</h2>
-            <p>
-              Xterasystem showcases opportunities across asset classes. Some are direct assets — property, vehicles, land.
-              Others are businesses, projects, funds, or revenue streams. Each opportunity page states exactly what you&apos;re
-              buying into and how it works.
-            </p>
-            <div className="note-box">
-              Exact availability, minimums, and eligibility depend on your country/region and on each opportunity.
-            </div>
-          </div>
-        </FadeIn>
-
-        {/* Featured category cards with real background images */}
-        <StaggerContainer
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: '16px',
-            marginBottom: '28px',
-          }}
-          staggerChildren={0.08}
+        <SectionHead
+          eyebrow="Investment universe"
+          title="A broad universe, organized for clarity"
+          note="Exact availability, minimums, and eligibility depend on your country or region and on each opportunity."
         >
-          {featuredCats.map((cat) => (
+          Xterasystem lists opportunities across asset classes. Some are direct assets such as property, vehicles,
+          and land. Others are businesses, projects, funds, or revenue streams. Each opportunity page states what
+          you&apos;re buying into and how it works.
+        </SectionHead>
+
+        <StaggerContainer className="featured-grid" staggerChildren={stagger.grid}>
+          {featured.map((cat) => (
             <StaggerItem key={cat.name}>
-              <motion.div
-                whileHover={{ y: -6, scale: 1.02 }}
-                transition={springBounce}
-                style={{
-                  position: 'relative',
-                  height: '140px',
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  border: '1px solid var(--border)',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
-                  cursor: 'pointer',
-                  backgroundColor: 'var(--card)',
-                }}
+              <button
+                type="button"
+                className="featured-card card-interactive"
+                aria-current={selectedIdx === cat.index}
+                aria-controls="cat-panel"
+                onClick={() => selectFromFeatured(cat.index)}
               >
-                <Image
+                <SkeletonImage
                   src={cat.image}
-                  alt={cat.name}
+                  alt=""
                   fill
-                  sizes="(max-width: 768px) 100vw, 25vw"
-                  style={{ objectFit: 'cover' }}
-                />
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-end',
-                    padding: '16px',
-                    color: '#ffffff',
-                  }}
+                  sizes="(max-width: 900px) 50vw, 25vw"
+                  className="media-fill"
                 >
-                  <span style={{ fontSize: '16px', fontWeight: '700', color: '#ffffff', letterSpacing: '-0.01em' }}>
-                    {cat.name.split(' & ')[0]}
+                  <span className="media-caption">
+                    <strong>{cat.name}</strong>
+                    <span>{cat.items.length} asset types</span>
                   </span>
-                </div>
-              </motion.div>
+                </SkeletonImage>
+              </button>
             </StaggerItem>
           ))}
         </StaggerContainer>
 
-        {/* All categories grid with images */}
-        <div className="universe-layout">
-          <StaggerContainer
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: '14px',
-            }}
-            staggerChildren={0.04}
+        <FadeIn>
+          <div className="cat-tabs" role="tablist" aria-label="Asset classes">
+            {categories.map((cat, i) => (
+              <button
+                key={cat.name}
+                ref={(el) => { tabRefs.current[i] = el; }}
+                id={`cat-tab-${i}`}
+                type="button"
+                role="tab"
+                className="cat-tab"
+                aria-selected={i === selectedIdx}
+                aria-controls="cat-panel"
+                tabIndex={i === selectedIdx ? 0 : -1}
+                onClick={() => setSelectedIdx(i)}
+                onKeyDown={onTabKeyDown}
+              >
+                <span className="cat-tab-name">{cat.name}</span>
+                <span className="cat-tab-count">{cat.items.length} asset types</span>
+              </button>
+            ))}
+          </div>
+
+          <div
+            ref={panelRef}
+            id="cat-panel"
+            className="card cat-panel"
+            role="tabpanel"
+            aria-labelledby={`cat-tab-${selectedIdx}`}
           >
-            {categories.map((cat, i) => {
-              const isSelected = i === selectedIdx;
-              return (
-                <StaggerItem key={cat.name}>
-                  <motion.div
-                    onClick={() => setSelectedIdx(i)}
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={springBounce}
-                    style={{
-                      position: 'relative',
-                      height: '130px',
-                      borderRadius: '14px',
-                      overflow: 'hidden',
-                      border: isSelected ? '2px solid var(--green)' : '1px solid var(--border)',
-                      boxShadow: isSelected ? '0 0 20px rgba(30, 215, 96, 0.25)' : '0 4px 12px rgba(0,0,0,0.05)',
-                      cursor: 'pointer',
-                      backgroundColor: 'var(--card)',
-                    }}
-                  >
-                    {/* Category Background Image */}
-                    <Image
-                      src={cat.image}
-                      alt={cat.name}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      style={{
-                        objectFit: 'cover',
-                        opacity: isSelected ? 0.9 : 0.75,
-                        transition: 'opacity 0.3s ease, transform 0.4s ease',
-                      }}
-                    />
-
-                    {/* Dark gradient overlay for text readability */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.4) 65%, transparent 100%)',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'flex-end',
-                        padding: '14px 16px',
-                        color: '#ffffff',
-                      }}
-                    >
-                      <span style={{ fontSize: '15px', fontWeight: '700', color: '#ffffff', letterSpacing: '-0.01em', lineHeight: '1.25' }}>
-                        {cat.name}
-                      </span>
-                      <span style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.75)', marginTop: '4px', fontFamily: 'var(--mono)' }}>
-                        {cat.items.length} listed
-                      </span>
-                    </div>
-
-                    {/* Active Indicator Green Dot */}
-                    {isSelected && (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          top: '10px',
-                          right: '10px',
-                          width: '10px',
-                          height: '10px',
-                          borderRadius: '50%',
-                          backgroundColor: 'var(--green)',
-                          boxShadow: '0 0 10px var(--green)',
-                        }}
-                      />
-                    )}
-                  </motion.div>
-                </StaggerItem>
-              );
-            })}
-          </StaggerContainer>
-
-          {/* Detail panel with animated transition */}
-          <AnimatePresence mode="wait">
+            {/* Keyed fade-in only: an exit phase can strand stale content when tabs change quickly. */}
             <motion.div
-              key={selectedCat.name}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25 }}
-              className="detail-panel show"
-              style={{ marginTop: '24px' }}
+              key={selected.name}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={transition.fast}
             >
-              <div className="detail-panel-head">
-                <h3>{selectedCat.name}</h3>
-                <span className="eyebrow">{selectedCat.items.length} opportunities</span>
+              <div className="cat-panel-head">
+                <h3>{selected.name}</h3>
+                <span className="eyebrow">{selected.items.length} asset types</span>
               </div>
-              <div className="chip-row">
-                {selectedCat.items.map((it, idx) => (
-                  <motion.span
-                    className="chip"
-                    key={it}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: idx * 0.03 }}
-                    whileHover={{ scale: 1.05, borderColor: 'var(--green)' }}
-                  >
-                    {it}
-                  </motion.span>
+              <ul className="chip-row">
+                {selected.items.map((item) => (
+                  <li key={item} className="chip">{item}</li>
                 ))}
-              </div>
+              </ul>
             </motion.div>
-          </AnimatePresence>
-        </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

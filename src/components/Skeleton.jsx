@@ -1,27 +1,22 @@
-export function SkeletonLine({ width = '100%', height = '14px', style = {}, className = '' }) {
-  return (
-    <span
-      className={`skeleton-line ${className}`}
-      style={{ width, height, ...style }}
-    />
-  );
-}
+'use client';
 
-export function SkeletonBlock({ width = '100%', height = '100%', style = {}, className = '' }) {
-  return (
-    <div
-      className={`skeleton-block ${className}`}
-      style={{ width, height, ...style }}
-    />
-  );
-}
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
-export function SkeletonCard({ height = '140px', style = {} }) {
+// next/image with a shimmer placeholder that clears once the photo has decoded.
+export function SkeletonImage({ className = '', children, ...imageProps }) {
+  const [loaded, setLoaded] = useState(false);
+  const imgRef = useRef(null);
+
+  // Cached images can finish loading before hydration attaches onLoad.
+  useEffect(() => {
+    if (imgRef.current?.complete) setLoaded(true);
+  }, []);
+
   return (
-    <div className="skeleton-card" style={{ padding: '16px', background: 'var(--card)', borderRadius: '12px', border: '1px solid var(--border)', ...style }}>
-      <SkeletonLine width="40%" height="12px" style={{ marginBottom: '12px' }} />
-      <SkeletonLine width="85%" height="18px" style={{ marginBottom: '10px' }} />
-      <SkeletonLine width="60%" height="14px" />
-    </div>
+    <span className={`media ${loaded ? '' : 'skeleton'} ${className}`} aria-busy={!loaded}>
+      <Image ref={imgRef} onLoad={() => setLoaded(true)} {...imageProps} />
+      {children}
+    </span>
   );
 }
